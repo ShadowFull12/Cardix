@@ -67,6 +67,12 @@ export function PublicCard({ profile, viewer, shareMode }) {
     }
   };
 
+  const ensureAbsoluteUrl = (url) => {
+    if (!url) return "";
+    if (url.startsWith("http://") || url.startsWith("https://")) return url;
+    return `https://${url}`;
+  };
+
   const publicData = profile.publicData || {};
   const socialLinks = publicData.socialLinks || {};
   const privacy = profile.settings?.privacy || {};
@@ -162,7 +168,7 @@ export function PublicCard({ profile, viewer, shareMode }) {
               </span>
             )}
             {userWebsite && !isContactOnly && (
-              <a href={userWebsite} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+              <a href={ensureAbsoluteUrl(userWebsite)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
                 <FiGlobe className="text-zinc-400" /> Website
               </a>
             )}
@@ -177,22 +183,22 @@ export function PublicCard({ profile, viewer, shareMode }) {
         return (
           <div className="flex flex-wrap gap-2">
             {socialLinks.twitter && (
-              <a href={socialLinks.twitter} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1DA1F2] hover:border-transparent hover:text-white transition-all">
+              <a href={ensureAbsoluteUrl(socialLinks.twitter)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1DA1F2] hover:border-transparent hover:text-white transition-all">
                 <FiTwitter className="text-xs" />
               </a>
             )}
             {socialLinks.linkedin && (
-              <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#0A66C2] hover:border-transparent hover:text-white transition-all">
+              <a href={ensureAbsoluteUrl(socialLinks.linkedin)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#0A66C2] hover:border-transparent hover:text-white transition-all">
                 <FiLinkedin className="text-xs" />
               </a>
             )}
             {socialLinks.github && (
-              <a href={socialLinks.github} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black hover:border-transparent transition-all">
+              <a href={ensureAbsoluteUrl(socialLinks.github)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black hover:border-transparent transition-all">
                 <FiGithub className="text-xs" />
               </a>
             )}
             {socialLinks.instagram && (
-              <a href={socialLinks.instagram} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr from-[#fd5949] to-[#d6249f] hover:border-transparent hover:text-white transition-all">
+              <a href={ensureAbsoluteUrl(socialLinks.instagram)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr from-[#fd5949] to-[#d6249f] hover:border-transparent hover:text-white transition-all">
                 <FiInstagram className="text-xs" />
               </a>
             )}
