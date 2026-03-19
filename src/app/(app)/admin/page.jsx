@@ -149,7 +149,79 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto w-full pb-4">
+        {/* Mobile View: Stacked Cards */}
+        <div className="block md:hidden space-y-4 w-full">
+          {filteredUsers.map((u, i) => (
+            <motion.div
+              key={u.uid}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.03 }}
+              className="p-4 border border-white/5 bg-white/5 rounded-2xl flex flex-col gap-4 w-full"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 flex items-center justify-center text-sm font-bold shrink-0 overflow-hidden">
+                  {u.photoURL ? (
+                    <img src={u.photoURL} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    u.publicData?.name?.[0] || "?"
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-white text-base truncate">{u.publicData?.name || "—"}</p>
+                  <p className="text-xs text-zinc-400 truncate">@{u.username || "—"}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 text-sm bg-black/20 p-3 rounded-xl border border-white/5">
+                <div>
+                  <p className="text-xs text-zinc-500">Views</p>
+                  <p className="font-semibold text-zinc-200">{u.analytics?.views || 0}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-zinc-500">Scans</p>
+                  <p className="font-semibold text-zinc-200">{u.analytics?.scans || 0}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between mt-1">
+                <div className="flex gap-2">
+                  <span className={`text-[10px] px-2 py-1 rounded-full uppercase font-bold tracking-wider ${u.plan === "pro" ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-zinc-700 text-zinc-400 border border-zinc-600"}`}>
+                    {u.plan || "free"}
+                  </span>
+                  <span className={`text-[10px] px-2 py-1 rounded-full font-bold tracking-wider ${u.settings?.profileVisibility === "public" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-zinc-700 text-zinc-400 border border-zinc-600"}`}>
+                    {u.settings?.profileVisibility || "public"}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => togglePlan(u.uid, u.plan || "free")}
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-amber-400 hover:text-amber-300 transition-colors"
+                  >
+                    <FiStar className="text-sm" />
+                  </button>
+                  <button
+                    onClick={() => toggleVisibility(u.uid, u.settings?.profileVisibility)}
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    <FiEye className="text-sm" />
+                  </button>
+                  <a
+                    href={`/card/${u.username}`}
+                    target="_blank"
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    <FiLink className="text-sm" />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden md:block overflow-x-auto w-full pb-4">
           <table className="w-full text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-white/10 text-zinc-400 text-left">
