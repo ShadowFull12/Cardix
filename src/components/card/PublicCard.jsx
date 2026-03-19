@@ -84,6 +84,120 @@ export function PublicCard({ profile, viewer, shareMode }) {
   const showPhone = privacy.phonePublic && userPhone;
   const showLocation = privacy.locationPublic && userLocation;
 
+  const layoutOrder = profile.settings?.layoutOrder || ["header", "contact", "socials"];
+
+  const renderSection = (sectionId) => {
+    switch (sectionId) {
+      case "header":
+        if (!showHeader) return null;
+        return (
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
+            {/* Avatar */}
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0 ring-2 shadow-xl shadow-black/50" style={{ ringColor: `${accentColor}40` }}>
+              {profile.photoURL ? (
+                <img src={profile.photoURL} className="w-full h-full object-cover" alt="" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-3xl font-bold" style={{ background: `${accentColor}25`, color: accentColor }}>
+                  {publicData.name?.[0] || "?"}
+                </div>
+              )}
+            </div>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0 pt-1">
+              <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white mb-1 truncate pr-16 sm:pr-0">
+                {publicData.name || "Your Name"}
+              </h1>
+              <p className="text-sm font-medium mb-3" style={{ color: accentColor }}>
+                {publicData.role || "Your Role"}
+              </p>
+              {!isMinimal && publicData.bio && (
+                <p className="text-zinc-400 leading-relaxed text-sm line-clamp-3">
+                  {publicData.bio}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+      case "contact":
+        if (isContactOnly && !showHeader) {
+          return (
+            <div className="space-y-3 py-2">
+              <h2 className="text-lg font-bold font-mono mb-4 text-center">Contact Info</h2>
+              {showEmail && (
+                <a href={`mailto:${userEmail}`} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
+                  <FiMail className="text-blue-400" /> <span className="text-sm">{userEmail}</span>
+                </a>
+              )}
+              {showPhone && (
+                <a href={`tel:${userPhone}`} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
+                  <FiPhone className="text-green-400" /> <span className="text-sm">{userPhone}</span>
+                </a>
+              )}
+            </div>
+          );
+        }
+        return (
+          <div className="flex flex-wrap gap-2">
+            {showEmail && (
+              <a href={`mailto:${userEmail}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+                <FiMail className="text-zinc-400" /> {isContactOnly ? userEmail : "Email"}
+              </a>
+            )}
+            {showPhone && (
+              <a href={`tel:${userPhone}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+                <FiPhone className="text-zinc-400" /> {isContactOnly ? userPhone : "Call"}
+              </a>
+            )}
+            {showLocation && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10">
+                <FiMapPin className="text-zinc-400" /> {userLocation}
+              </span>
+            )}
+            {userWebsite && !isContactOnly && (
+              <a href={userWebsite} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+                <FiGlobe className="text-zinc-400" /> Website
+              </a>
+            )}
+            <button onClick={handleSaveContact} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors hover:bg-black/40" style={{ borderColor: `${accentColor}30`, color: accentColor }}>
+              <FiDownload /> Save
+            </button>
+          </div>
+        );
+
+      case "socials":
+        if (!showSocials || !Object.values(socialLinks).some(link => link)) return null;
+        return (
+          <div className="flex flex-wrap gap-2">
+            {socialLinks.twitter && (
+              <a href={socialLinks.twitter} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1DA1F2] hover:border-transparent hover:text-white transition-all">
+                <FiTwitter className="text-xs" />
+              </a>
+            )}
+            {socialLinks.linkedin && (
+              <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#0A66C2] hover:border-transparent hover:text-white transition-all">
+                <FiLinkedin className="text-xs" />
+              </a>
+            )}
+            {socialLinks.github && (
+              <a href={socialLinks.github} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black hover:border-transparent transition-all">
+                <FiGithub className="text-xs" />
+              </a>
+            )}
+            {socialLinks.instagram && (
+              <a href={socialLinks.instagram} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr from-[#fd5949] to-[#d6249f] hover:border-transparent hover:text-white transition-all">
+                <FiInstagram className="text-xs" />
+              </a>
+            )}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.97 }}
@@ -121,110 +235,13 @@ export function PublicCard({ profile, viewer, shareMode }) {
         )}
       </div>
 
-      {/* HORIZONTAL CARD LAYOUT */}
-      <div className="p-6 lg:p-8">
-        {showHeader && (
-          <div className="flex flex-col sm:flex-row gap-6 items-start">
-            {/* Avatar */}
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0 ring-2 shadow-xl shadow-black/50" style={{ ringColor: `${accentColor}40` }}>
-              {profile.photoURL ? (
-                <img src={profile.photoURL} className="w-full h-full object-cover" alt="" />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-3xl font-bold" style={{ background: `${accentColor}25`, color: accentColor }}>
-                  {publicData.name?.[0] || "?"}
-                </div>
-              )}
-            </div>
-
-            {/* Info */}
-            <div className="flex-1 min-w-0 pt-1">
-              <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white mb-1 truncate pr-20 sm:pr-0">
-                {publicData.name || "Your Name"}
-              </h1>
-              <p className="text-sm font-medium mb-3" style={{ color: accentColor }}>
-                {publicData.role || "Your Role"}
-              </p>
-              
-              {!isMinimal && publicData.bio && (
-                <p className="text-zinc-400 leading-relaxed text-sm line-clamp-3">
-                  {publicData.bio}
-                </p>
-              )}
-
-              {/* Inline contact pills */}
-              <div className="flex flex-wrap gap-2 mt-4">
-                {showEmail && (
-                  <a href={`mailto:${userEmail}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
-                    <FiMail className="text-zinc-400" /> {isContactOnly ? userEmail : "Email"}
-                  </a>
-                )}
-                {showPhone && (
-                  <a href={`tel:${userPhone}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
-                    <FiPhone className="text-zinc-400" /> {isContactOnly ? userPhone : "Call"}
-                  </a>
-                )}
-                {showLocation && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10">
-                    <FiMapPin className="text-zinc-400" /> {userLocation}
-                  </span>
-                )}
-                {userWebsite && !isContactOnly && (
-                  <a href={userWebsite} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
-                    <FiGlobe className="text-zinc-400" /> Website
-                  </a>
-                )}
-                <button onClick={handleSaveContact} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors hover:bg-black/40" style={{ borderColor: `${accentColor}30`, color: accentColor }}>
-                  <FiDownload /> Save Contact
-                </button>
-              </div>
-            </div>
+      {/* DYNAMIC CARD LAYOUT */}
+      <div className="p-6 lg:p-8 flex flex-col gap-6">
+        {layoutOrder.map((sectionId) => (
+          <div key={sectionId} className="w-full">
+            {renderSection(sectionId)}
           </div>
-        )}
-
-        {/* Contact-only mode: simple contact list */}
-        {isContactOnly && !showHeader && (
-          <div className="space-y-3 py-4">
-            <h2 className="text-lg font-bold font-mono mb-4 text-center">Contact Info</h2>
-            {showEmail && (
-              <a href={`mailto:${userEmail}`} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
-                <FiMail className="text-blue-400" /> <span className="text-sm">{userEmail}</span>
-              </a>
-            )}
-            {showPhone && (
-              <a href={`tel:${userPhone}`} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
-                <FiPhone className="text-green-400" /> <span className="text-sm">{userPhone}</span>
-              </a>
-            )}
-          </div>
-        )}
-
-        {/* Socials */}
-        {showSocials && Object.values(socialLinks).some(link => link) && (
-          <div className="mt-6 pt-5 border-t border-white/5">
-            <div className="flex flex-wrap gap-2">
-              {socialLinks.twitter && (
-                <a href={socialLinks.twitter} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1DA1F2] hover:border-transparent hover:text-white transition-all">
-                  <FiTwitter className="text-xs" />
-                </a>
-              )}
-              {socialLinks.linkedin && (
-                <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#0A66C2] hover:border-transparent hover:text-white transition-all">
-                  <FiLinkedin className="text-xs" />
-                </a>
-              )}
-              {socialLinks.github && (
-                <a href={socialLinks.github} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black hover:border-transparent transition-all">
-                  <FiGithub className="text-xs" />
-                </a>
-              )}
-              {socialLinks.instagram && (
-                <a href={socialLinks.instagram} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr from-[#fd5949] to-[#d6249f] hover:border-transparent hover:text-white transition-all">
-                  <FiInstagram className="text-xs" />
-                </a>
-              )}
-            </div>
-          </div>
-        )}
+        ))}
       </div>
 
       {/* Watermark */}
