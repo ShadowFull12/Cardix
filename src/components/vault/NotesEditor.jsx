@@ -65,7 +65,6 @@ export function NotesEditor() {
       return;
     }
 
-    setCreating(true);
     try {
       const newNote = {
         title: "Untitled Note",
