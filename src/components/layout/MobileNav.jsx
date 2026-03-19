@@ -107,7 +107,7 @@ export function MobileNav() {
                   {/* Expand Arrow Trigger */}
                   <button 
                     onClick={() => setExpanded(!expanded)}
-                    className="absolute -bottom-5 w-8 h-8 rounded-full bg-[#1a1a20] border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors z-10 shadow-lg"
+                    className="absolute -bottom-8 w-8 h-8 rounded-full bg-[#1a1a20] border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors z-10 shadow-lg"
                   >
                     <motion.div animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
                       <FiChevronUp strokeWidth={3} className="text-sm" />

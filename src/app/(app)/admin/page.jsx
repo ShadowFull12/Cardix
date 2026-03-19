@@ -138,8 +138,8 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto w-full pb-4">
+          <table className="w-full text-sm min-w-[800px]">
             <thead>
               <tr className="border-b border-white/10 text-zinc-400 text-left">
                 <th className="py-3 px-4 font-medium">User</th>

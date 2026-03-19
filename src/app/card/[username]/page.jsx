@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { getUserByUsername, incrementProfileViews, addRecentlyViewed } from "@/lib/firestore";
+import { getUserByUsername, incrementProfileViews, incrementQRScans, addRecentlyViewed } from "@/lib/firestore";
 import { PublicCard } from "@/components/card/PublicCard";
 
 export default function PublicProfileRoute({ params }) {
@@ -39,7 +39,12 @@ export default function PublicProfileRoute({ params }) {
         if (user && user.uid !== foundUser.uid) {
           await addRecentlyViewed(user.uid, foundUser.uid);
         }
-        await incrementProfileViews(foundUser.uid);
+        
+        if (searchParams.get("source") === "qr") {
+          await incrementQRScans(foundUser.uid);
+        } else {
+          await incrementProfileViews(foundUser.uid);
+        }
 
         setTargetUser(foundUser);
       } catch (err) {

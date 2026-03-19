@@ -228,7 +228,7 @@ export function NotesEditor() {
                   type="text"
                   value={activeNote.title || ""}
                   onChange={(e) => setActiveNote(prev => ({ ...prev, title: e.target.value }))}
-                  className="flex-1 bg-transparent text-lg font-bold font-mono outline-none text-white placeholder-zinc-600"
+                  className="flex-1 min-w-0 bg-transparent text-lg font-bold font-mono outline-none text-white placeholder-zinc-600 truncate"
                   placeholder="Note title..."
                 />
                 <div className="flex items-center gap-1.5">
@@ -288,7 +288,7 @@ export function NotesEditor() {
                 ref={editorRef}
                 contentEditable
                 onInput={handleContentChange}
-                className="flex-1 p-4 md:p-6 outline-none overflow-y-auto text-sm leading-relaxed text-zinc-200 prose prose-invert max-w-none min-h-[300px]"
+                className="flex-1 p-4 md:p-6 outline-none overflow-y-auto overflow-x-hidden text-sm leading-relaxed text-zinc-200 prose prose-invert break-words max-w-full min-h-[300px] w-full"
                 style={{ background: activeNote.color || "transparent" }}
                 suppressContentEditableWarning
               />

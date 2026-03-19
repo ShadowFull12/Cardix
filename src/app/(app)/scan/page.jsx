@@ -38,12 +38,14 @@ export default function ScanPage() {
             // Extract path and navigate
             try {
               const url = new URL(decodedText);
+              url.searchParams.set("source", "qr");
               toast.success("QR Code scanned!");
-              setTimeout(() => router.push(url.pathname), 500);
+              setTimeout(() => router.push(url.pathname + url.search), 500);
             } catch {
               // Not a valid URL, try as path
               toast.success("QR Code scanned!");
-              setTimeout(() => router.push(decodedText), 500);
+              const connector = decodedText.includes("?") ? "&" : "?";
+              setTimeout(() => router.push(`${decodedText}${connector}source=qr`), 500);
             }
           } else {
             toast.error("Not a Cardix QR code");
