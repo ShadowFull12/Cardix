@@ -56,6 +56,16 @@ export function NotesEditor() {
   };
 
   const createNote = async () => {
+    const userPlan = user?.plan || "free";
+    const limits = { free: 5, pro: 1000, business: Infinity, enterprise: Infinity };
+    const limit = limits[userPlan] || 5;
+    
+    if (notes.length >= limit) {
+      toast.error(`Maximum of ${limit} notes reached for the ${userPlan} plan. Upgrade to save more!`);
+      return;
+    }
+
+    setCreating(true);
     try {
       const newNote = {
         title: "Untitled Note",

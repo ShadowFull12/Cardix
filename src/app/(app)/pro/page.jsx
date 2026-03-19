@@ -126,10 +126,15 @@ export default function PricingPage() {
             </ul>
 
             <button
-              disabled={plan.name === "Free" && !isPremium}
-              className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${plan.buttonStyle}`}
+              disabled={plan.name.toLowerCase() === (user?.plan || "free") || (plan.name === "Free" && isPremium)}
+              className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
+                plan.name.toLowerCase() === (user?.plan || "free") 
+                  ? "bg-white/10 text-zinc-400 cursor-default"
+                  : plan.buttonStyle
+              }`}
             >
-              {plan.buttonText} {plan.name !== "Free" && <FiArrowRight />}
+              {plan.name.toLowerCase() === (user?.plan || "free") ? "Current Tier" : plan.buttonText} 
+              {plan.name.toLowerCase() !== (user?.plan || "free") && plan.name !== "Free" && <FiArrowRight />}
             </button>
           </motion.div>
         ))}

@@ -10,7 +10,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
-const FREE_TIER_LIMIT_BYTES = 500 * 1024 * 1024; // 500 MB
 
 export function PersonalVault() {
   const { user } = useAuth();
@@ -19,6 +18,10 @@ export function PersonalVault() {
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const fileInputRef = useRef(null);
+
+  const userPlan = user?.plan || "free";
+  const limitBytes = userPlan === "business" ? 100 * 1024 * 1024 * 1024 : userPlan === "pro" ? 10 * 1024 * 1024 * 1024 : 500 * 1024 * 1024;
+  const limitLabel = userPlan === "business" ? "100 GB" : userPlan === "pro" ? "10 GB" : "500 MB";
 
   useEffect(() => {
     if (!user) return;
@@ -57,8 +60,8 @@ export function PersonalVault() {
     let sumNewBytes = 0;
     for (const f of selectedFiles) sumNewBytes += f.size;
 
-    if (totalBytes + sumNewBytes > FREE_TIER_LIMIT_BYTES) {
-      toast.error("Upload exceeds your 500MB Free limit. Please upgrade to Pro.");
+    if (totalBytes + sumNewBytes > limitBytes) {
+      toast.error(`Upload exceeds your ${limitLabel} limit for the ${userPlan} plan.`);
       return;
     }
 
@@ -134,22 +137,22 @@ export function PersonalVault() {
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
           <h2 className="text-xl font-bold font-mono">Personal Vault</h2>
-          <p className="text-sm text-zinc-400 mt-1">Free cloud storage backed by Cloudinary</p>
+          <p className="text-sm text-zinc-400 mt-1">Personal cloud storage backed by Cloudinary</p>
         </div>
         
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
-            <p className="text-xs font-medium text-zinc-300">{formatSize(totalBytes)} / 500 MB</p>
+            <p className="text-xs font-medium text-zinc-300">{formatSize(totalBytes)} / {limitLabel}</p>
             <div className="w-32 h-1.5 bg-zinc-800 rounded-full mt-1.5 overflow-hidden">
               <div 
-                className={`h-full ${totalBytes > FREE_TIER_LIMIT_BYTES * 0.9 ? 'bg-red-500' : 'bg-blue-500'}`} 
-                style={{ width: `${Math.min((totalBytes / FREE_TIER_LIMIT_BYTES) * 100, 100)}%` }} 
+                className={`h-full ${totalBytes > limitBytes * 0.9 ? 'bg-red-500' : 'bg-blue-500'}`} 
+                style={{ width: `${Math.min((totalBytes / limitBytes) * 100, 100)}%` }} 
               />
             </div>
           </div>
           <button
             onClick={() => fileInputRef.current?.click()}
-            disabled={uploading || totalBytes >= FREE_TIER_LIMIT_BYTES}
+            disabled={uploading || totalBytes >= limitBytes}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl font-medium transition-colors disabled:opacity-50"
           >
             {uploading ? (
@@ -169,15 +172,17 @@ export function PersonalVault() {
         />
       </div>
 
-      {totalBytes >= FREE_TIER_LIMIT_BYTES && (
+      {totalBytes >= limitBytes && (
         <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h4 className="font-semibold text-red-400">Storage Limit Reached</h4>
-            <p className="text-sm text-zinc-400">You've reached your free 500MB limit. Upgrade to Pro for 10GB.</p>
+            <p className="text-sm text-zinc-400">You've reached your {limitLabel} limit. Upgrade to save more files.</p>
           </div>
-          <Link href="/pro" className="whitespace-nowrap px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium text-sm transition-colors">
-            Upgrade Plan
-          </Link>
+          {(userPlan === "free" || userPlan === "pro") && (
+            <Link href="/pro" className="whitespace-nowrap px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium text-sm transition-colors">
+              Upgrade Plan
+            </Link>
+          )}
         </div>
       )}
 
