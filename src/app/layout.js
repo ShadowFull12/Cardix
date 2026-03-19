@@ -30,14 +30,14 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark overflow-x-hidden max-w-[100vw]" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.variable} font-sans min-h-screen bg-black text-white antialiased overflow-x-hidden max-w-[100vw]`}>
+      <body className={`${inter.variable} font-sans min-h-screen bg-black text-white antialiased overflow-x-hidden w-full`}>
         <AuthProvider>
           <ThemeProvider>
             {children}

@@ -222,34 +222,38 @@ export function NotesEditor() {
         <div className="flex-1 flex flex-col">
           {activeNote ? (
             <>
-              {/* Title */}
-              <div className="p-4 border-b border-white/5 flex items-center gap-3">
+              {/* Title & Actions */}
+              <div className="p-3 md:p-4 border-b border-white/5 flex flex-col sm:flex-row sm:items-center gap-3 w-full">
                 <input
                   type="text"
                   value={activeNote.title || ""}
                   onChange={(e) => setActiveNote(prev => ({ ...prev, title: e.target.value }))}
-                  className="flex-1 min-w-0 bg-transparent text-lg font-bold font-mono outline-none text-white placeholder-zinc-600 truncate"
+                  className="w-full sm:flex-1 min-w-0 bg-transparent text-lg font-bold font-mono outline-none text-white placeholder-zinc-600 truncate"
                   placeholder="Note title..."
                 />
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-1.5 w-full sm:w-auto overflow-x-auto no-scrollbar">
                   {/* Color picker dots */}
-                  {NOTE_COLORS.map(c => (
-                    <button
-                      key={c.name}
-                      onClick={() => setActiveNote(prev => ({ ...prev, color: c.value }))}
-                      className={`w-4 h-4 rounded-full border transition-transform hover:scale-125
-                        ${activeNote.color === c.value ? "ring-2 ring-white/50 scale-110" : ""} ${c.border}`}
-                      style={{ background: c.value === "transparent" ? "#27272a" : c.value.replace("20", "60") }}
-                      title={c.name}
-                    />
-                  ))}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {NOTE_COLORS.map(c => (
+                      <button
+                        key={c.name}
+                        onClick={() => setActiveNote(prev => ({ ...prev, color: c.value }))}
+                        className={`w-5 h-5 md:w-4 md:h-4 rounded-full border transition-transform hover:scale-125
+                          ${activeNote.color === c.value ? "ring-2 ring-white/50 scale-110" : ""} ${c.border}`}
+                        style={{ background: c.value === "transparent" ? "#27272a" : c.value.replace("20", "60") }}
+                        title={c.name}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0 ml-auto">
+                    <button onClick={() => deleteNote(activeNote.id)} className="p-2 hover:bg-red-500/20 rounded-lg text-red-400 transition-colors" title="Delete note">
+                      <FiTrash2 className="text-sm" />
+                    </button>
+                    <button onClick={saveNote} disabled={saving} className="px-3 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50">
+                      <FiSave className="text-xs md:text-sm" /> {saving ? "Saving..." : "Save"}
+                    </button>
+                  </div>
                 </div>
-                <button onClick={() => deleteNote(activeNote.id)} className="p-1.5 hover:bg-red-500/20 rounded-lg text-red-400 transition-colors" title="Delete note">
-                  <FiTrash2 className="text-sm" />
-                </button>
-                <button onClick={saveNote} disabled={saving} className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50">
-                  <FiSave className="text-xs" /> {saving ? "Saving..." : "Save"}
-                </button>
               </div>
 
               {/* Formatting Toolbar */}

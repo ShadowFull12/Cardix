@@ -133,11 +133,11 @@ export default function AdminPage() {
 
       {/* User Management */}
       <GlassCard hover={false} className="overflow-hidden">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 w-full">
+          <h3 className="text-lg font-semibold flex items-center gap-2 shrink-0">
             <FiUsers className="text-blue-400" /> User Management
           </h3>
-          <div className="relative max-w-xs w-full">
+          <div className="relative w-full md:max-w-sm">
             <input
               type="text"
               value={searchTerm}
