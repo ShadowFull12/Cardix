@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { getUserByUsername, incrementProfileViews, incrementQRScans, addRecentlyViewed } from "@/lib/firestore";
+import { getUserByUsername, incrementProfileViews, incrementQRScans, addRecentlyViewed, addScanHistory } from "@/lib/firestore";
 import { PublicCard } from "@/components/card/PublicCard";
 
 export default function PublicProfileRoute({ params }) {
@@ -42,6 +42,7 @@ export default function PublicProfileRoute({ params }) {
         
         if (searchParams.get("source") === "qr") {
           await incrementQRScans(foundUser.uid);
+          await addScanHistory(foundUser.uid, user ? user.uid : "anonymous");
         } else {
           await incrementProfileViews(foundUser.uid);
         }

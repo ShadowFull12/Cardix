@@ -86,7 +86,7 @@ export function ProfileForm({ initialData, onSave, saving, authEmail }) {
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all flex-1 justify-center min-w-[140px]
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all flex-1 justify-center whitespace-nowrap min-w-[100px]
               ${activeTab === tab.id 
                 ? "bg-white text-black shadow-lg" 
                 : "text-zinc-400 hover:text-white hover:bg-white/5"}`}
@@ -141,14 +141,14 @@ export function ProfileForm({ initialData, onSave, saving, authEmail }) {
               <div>
                 <label className="block text-sm font-medium text-zinc-400 mb-2">Username (Unique URL)</label>
                 <div className="flex bg-zinc-900/50 border border-white/10 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500/50">
-                  <div className="px-4 py-3 bg-white/5 text-zinc-500 border-r border-white/10 flex items-center">
+                  <div className="px-3 md:px-4 py-3 bg-white/5 text-zinc-500 border-r border-white/10 flex items-center shrink-0 text-xs md:text-sm">
                     cardix.app/card/
                   </div>
                   <input
                     type="text"
                     value={formData.username}
                     onChange={(e) => handleChange(null, "username", e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''))}
-                    className="flex-1 bg-transparent px-4 py-3 text-white focus:outline-none"
+                    className="flex-1 min-w-0 bg-transparent px-3 py-3 text-white focus:outline-none text-sm md:text-base"
                   />
                 </div>
               </div>

@@ -140,18 +140,23 @@ export default function Dashboard() {
             {profile.scanHistory?.length > 0 ? (
               <div className="space-y-4">
                 {profile.scanHistory.slice(0, 5).map((scan, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5 gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shrink-0">
                         <FiUser className="text-zinc-400" />
                       </div>
-                      <div>
-                        <p className="text-sm font-medium">Someone scanned your QR</p>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium truncate">Unknown Scan from a Profile</p>
                         <p className="text-xs text-zinc-500">
-                          {new Date(scan.timestamp).toLocaleDateString()}
+                          {new Date(scan.timestamp).toLocaleString()}
                         </p>
                       </div>
                     </div>
+                    <Link href="/analytics" className="shrink-0">
+                      <button className="w-full sm:w-auto px-4 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-lg transition-colors border border-blue-500/20">
+                        View Details
+                      </button>
+                    </Link>
                   </div>
                 ))}
               </div>

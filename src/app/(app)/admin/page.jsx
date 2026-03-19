@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserProfile, getAllUsers, updateUserProfile } from "@/lib/firestore";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { FiUsers, FiShield, FiActivity, FiTrash2, FiSearch, FiEye, FiZap, FiLink } from "react-icons/fi";
+import { FiUsers, FiShield, FiActivity, FiTrash2, FiSearch, FiEye, FiZap, FiLink, FiStar } from "react-icons/fi";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -60,6 +60,17 @@ export default function AdminPage() {
       toast.success(`Profile ${newVisibility === "public" ? "shown" : "hidden"}`);
     } catch {
       toast.error("Failed to update");
+    }
+  };
+
+  const togglePlan = async (uid, currentPlan) => {
+    const newPlan = currentPlan === "pro" ? "free" : "pro";
+    try {
+      await updateUserProfile(uid, { plan: newPlan });
+      setUsers(users.map((u) => u.uid === uid ? { ...u, plan: newPlan } : u));
+      toast.success(`User plan updated to ${newPlan}`);
+    } catch {
+      toast.error("Failed to update plan");
     }
   };
 
@@ -146,6 +157,7 @@ export default function AdminPage() {
                 <th className="py-3 px-4 font-medium">Username</th>
                 <th className="py-3 px-4 font-medium">Views</th>
                 <th className="py-3 px-4 font-medium">Scans</th>
+                <th className="py-3 px-4 font-medium">Plan</th>
                 <th className="py-3 px-4 font-medium">Visibility</th>
                 <th className="py-3 px-4 font-medium">Actions</th>
               </tr>
@@ -178,12 +190,24 @@ export default function AdminPage() {
                   <td className="py-3 px-4 text-zinc-300">{u.analytics?.views || 0}</td>
                   <td className="py-3 px-4 text-zinc-300">{u.analytics?.scans || 0}</td>
                   <td className="py-3 px-4">
+                    <span className={`text-xs px-2 py-1 rounded-full uppercase ${u.plan === "pro" ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-zinc-700 text-zinc-400 border border-zinc-600"}`}>
+                      {u.plan || "free"}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4">
                     <span className={`text-xs px-2 py-1 rounded-full ${u.settings?.profileVisibility === "public" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-zinc-700 text-zinc-400 border border-zinc-600"}`}>
                       {u.settings?.profileVisibility || "public"}
                     </span>
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => togglePlan(u.uid, u.plan || "free")}
+                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-amber-400 hover:text-amber-300 transition-colors"
+                        title="Toggle Pro Plan"
+                      >
+                        <FiStar className="text-sm" />
+                      </button>
                       <button
                         onClick={() => toggleVisibility(u.uid, u.settings?.profileVisibility)}
                         className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-colors"

@@ -53,6 +53,7 @@ export function AuthProvider({ children }) {
       photoURL: null,
       bio: "",
       role: "user",
+      plan: "free",
       onboardingComplete: false,
       template: "default",
       identityMode: "personal",
