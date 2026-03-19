@@ -31,11 +31,11 @@ function buildQrUrl(data, size, darkHex) {
 export function BrandedQR({ username, size = 200, accentColor = "#3b82f6" }) {
   const [copied, setCopied] = useState(false);
 
-  const profileUrl = typeof window !== "undefined"
+  const baseUrl = typeof window !== "undefined"
     ? `${window.location.origin}/card/${username}`
     : `https://cardix.app/card/${username}`;
 
-  const qrImageUrl = buildQrUrl(profileUrl, size * 2, accentColor);
+  const qrImageUrl = buildQrUrl(`${baseUrl}?source=qr`, size * 2, accentColor);
 
   const downloadQR = async () => {
     try {
@@ -89,7 +89,7 @@ export function BrandedQR({ username, size = 200, accentColor = "#3b82f6" }) {
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(profileUrl);
+    navigator.clipboard.writeText(baseUrl);
     setCopied(true);
     toast.success("Link copied!");
     setTimeout(() => setCopied(false), 2000);
