@@ -6,7 +6,7 @@ import {
   FiGithub, FiTwitter, FiLinkedin, FiInstagram,
   FiBookmark, FiShare2, FiDownload
 } from "react-icons/fi";
-import { saveCard, unsaveCard } from "@/lib/firestore";
+import { saveCard, unsaveCard, incrementLinkClicks } from "@/lib/firestore";
 import { downloadVCard } from "@/lib/sharing";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -59,6 +59,12 @@ export function PublicCard({ profile, viewer, shareMode }) {
   const handleSaveContact = () => {
     downloadVCard(profile);
     toast.success("Contact saved! Check your downloads.");
+  };
+
+  const handleLinkClick = () => {
+    if (profile?.uid) {
+      incrementLinkClicks(profile.uid).catch(err => console.error("Failed to track link click", err));
+    }
   };
 
   const publicData = profile.publicData || {};
@@ -126,12 +132,12 @@ export function PublicCard({ profile, viewer, shareMode }) {
             <div className="space-y-3 py-2">
               <h2 className="text-lg font-bold font-mono mb-4 text-center">Contact Info</h2>
               {showEmail && (
-                <a href={`mailto:${userEmail}`} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
+                <a href={`mailto:${userEmail}`} onClick={handleLinkClick} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
                   <FiMail className="text-blue-400" /> <span className="text-sm">{userEmail}</span>
                 </a>
               )}
               {showPhone && (
-                <a href={`tel:${userPhone}`} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
+                <a href={`tel:${userPhone}`} onClick={handleLinkClick} className="w-full flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-white/10 hover:bg-black/50 transition-colors">
                   <FiPhone className="text-green-400" /> <span className="text-sm">{userPhone}</span>
                 </a>
               )}
@@ -141,12 +147,12 @@ export function PublicCard({ profile, viewer, shareMode }) {
         return (
           <div className="flex flex-wrap gap-2">
             {showEmail && (
-              <a href={`mailto:${userEmail}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+              <a href={`mailto:${userEmail}`} onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
                 <FiMail className="text-zinc-400" /> {isContactOnly ? userEmail : "Email"}
               </a>
             )}
             {showPhone && (
-              <a href={`tel:${userPhone}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+              <a href={`tel:${userPhone}`} onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
                 <FiPhone className="text-zinc-400" /> {isContactOnly ? userPhone : "Call"}
               </a>
             )}
@@ -156,7 +162,7 @@ export function PublicCard({ profile, viewer, shareMode }) {
               </span>
             )}
             {userWebsite && !isContactOnly && (
-              <a href={userWebsite} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+              <a href={userWebsite} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
                 <FiGlobe className="text-zinc-400" /> Website
               </a>
             )}
@@ -171,22 +177,22 @@ export function PublicCard({ profile, viewer, shareMode }) {
         return (
           <div className="flex flex-wrap gap-2">
             {socialLinks.twitter && (
-              <a href={socialLinks.twitter} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1DA1F2] hover:border-transparent hover:text-white transition-all">
+              <a href={socialLinks.twitter} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1DA1F2] hover:border-transparent hover:text-white transition-all">
                 <FiTwitter className="text-xs" />
               </a>
             )}
             {socialLinks.linkedin && (
-              <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#0A66C2] hover:border-transparent hover:text-white transition-all">
+              <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#0A66C2] hover:border-transparent hover:text-white transition-all">
                 <FiLinkedin className="text-xs" />
               </a>
             )}
             {socialLinks.github && (
-              <a href={socialLinks.github} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black hover:border-transparent transition-all">
+              <a href={socialLinks.github} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black hover:border-transparent transition-all">
                 <FiGithub className="text-xs" />
               </a>
             )}
             {socialLinks.instagram && (
-              <a href={socialLinks.instagram} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr from-[#fd5949] to-[#d6249f] hover:border-transparent hover:text-white transition-all">
+              <a href={socialLinks.instagram} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr from-[#fd5949] to-[#d6249f] hover:border-transparent hover:text-white transition-all">
                 <FiInstagram className="text-xs" />
               </a>
             )}
