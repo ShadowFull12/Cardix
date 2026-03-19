@@ -24,8 +24,8 @@ export default function HomePage() {
       {/* Nav */}
       <nav className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Cardix Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]" />
-          <span className="text-xl font-bold font-mono tracking-tight">Cardix</span>
+          <img src="/logo.png" alt="Cardix Logo" className="w-14 h-14 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]" />
+          <span className="text-2xl font-bold font-mono tracking-tight">Cardix</span>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/login" className="text-sm text-zinc-400 hover:text-white transition-colors font-medium">

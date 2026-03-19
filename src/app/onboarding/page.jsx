@@ -201,7 +201,7 @@ export default function OnboardingPage() {
             {step === 0 && (
               <div className="text-center space-y-8">
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }}>
-                  <img src="/logo.png" alt="Cardix Logo" className="w-24 h-24 mx-auto object-contain drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
+                  <img src="/logo.png" alt="Cardix Logo" className="w-32 h-32 mx-auto object-contain drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
                 </motion.div>
                 <h1 className="text-4xl md:text-5xl font-bold font-mono tracking-tight">
                   Welcome to <span className="text-gradient">Cardix</span>

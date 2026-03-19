@@ -176,8 +176,8 @@ export function NotesEditor() {
   }
 
   return (
-    <GlassCard className="p-0 overflow-hidden">
-      <div className="flex h-[500px]">
+    <GlassCard className="p-0 overflow-hidden flex flex-col min-h-[500px] md:h-[650px]">
+      <div className="flex flex-1">
         {/* Sidebar — Note List */}
         <div className="w-64 border-r border-white/5 flex flex-col bg-black/30 shrink-0 hidden md:flex">
           <div className="p-4 border-b border-white/5 flex items-center justify-between">
@@ -253,7 +253,7 @@ export function NotesEditor() {
               </div>
 
               {/* Formatting Toolbar */}
-              <div className="px-4 py-2 border-b border-white/5 flex items-center gap-1 flex-wrap bg-black/20">
+              <div className="px-2 md:px-4 py-2 border-b border-white/5 flex items-center gap-1 overflow-x-auto no-scrollbar bg-black/20 shrink-0">
                 <button onClick={() => execCommand("bold")} className="p-2 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition-colors" title="Bold">
                   <FiBold className="text-sm" />
                 </button>
@@ -288,7 +288,7 @@ export function NotesEditor() {
                 ref={editorRef}
                 contentEditable
                 onInput={handleContentChange}
-                className="flex-1 p-5 outline-none overflow-y-auto text-sm leading-relaxed text-zinc-200 prose prose-invert max-w-none"
+                className="flex-1 p-4 md:p-6 outline-none overflow-y-auto text-sm leading-relaxed text-zinc-200 prose prose-invert max-w-none min-h-[300px]"
                 style={{ background: activeNote.color || "transparent" }}
                 suppressContentEditableWarning
               />

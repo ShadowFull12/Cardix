@@ -97,7 +97,7 @@ export function ProfileForm({ initialData, onSave, saving, authEmail }) {
         ))}
       </div>
 
-      <GlassCard className="p-8" hover={false}>
+      <GlassCard className="p-5 md:p-8" hover={false}>
         <AnimatePresence mode="wait">
           {activeTab === "public" && (
             <motion.div
@@ -294,7 +294,7 @@ export function ProfileForm({ initialData, onSave, saving, authEmail }) {
               
               <div>
                 <label className="block text-sm font-medium text-zinc-400 mb-3">Profile Visibility</label>
-                <div className="flex gap-4">
+                <div className="flex flex-col md:flex-row gap-4">
                   <label className={`flex-1 p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-colors ${formData.settings.profileVisibility === 'public' ? 'border-blue-500 bg-blue-500/10' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}>
                     <div className="flex items-center gap-3">
                       <FiGlobe className={formData.settings.profileVisibility === 'public' ? 'text-blue-500' : 'text-zinc-500'} />

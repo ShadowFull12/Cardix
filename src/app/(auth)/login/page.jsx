@@ -61,7 +61,7 @@ export default function Login() {
 
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-10">
-          <img src="/logo.png" alt="Cardix Logo" className="w-16 h-16 mx-auto object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.3)] mb-6" />
+          <img src="/logo.png" alt="Cardix Logo" className="w-24 h-24 mx-auto object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.3)] mb-6" />
           <h1 className="text-3xl font-bold font-mono tracking-tighter mb-2">Welcome to Cardix</h1>
           <p className="text-zinc-400">Sign in to manage your digital identity</p>
         </div>

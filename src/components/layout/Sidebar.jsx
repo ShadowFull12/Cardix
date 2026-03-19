@@ -31,8 +31,8 @@ export function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 border-r border-white/10 p-6 z-50" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }}>
       <div className="flex items-center gap-3 mb-10">
-        <img src="/logo.png" alt="Cardix Logo" className="w-8 h-8 object-contain" />
-        <span className="text-xl font-bold font-mono tracking-tight text-white">Cardix</span>
+        <img src="/logo.png" alt="Cardix Logo" className="w-10 h-10 object-contain" />
+        <span className="text-2xl font-bold font-mono tracking-tight text-white">Cardix</span>
       </div>
 
       <nav className="flex-1 space-y-1">
