@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { FiHome, FiUser, FiCamera, FiHardDrive, FiGrid } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const MOBILE_NAV = [
   { name: "Home", href: "/dashboard", icon: FiHome },
@@ -15,6 +16,7 @@ const MOBILE_NAV = [
 
 export function MobileNav() {
   const pathname = usePathname();
+  const { accent } = useTheme();
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-6 pt-2">
@@ -25,7 +27,9 @@ export function MobileNav() {
           if (item.isCenter) {
             return (
               <Link key={item.name} href={item.href} className="relative -top-6">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 border-4 border-black">
+                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-black"
+                  style={{ background: accent, boxShadow: `0 8px 25px ${accent}40` }}
+                >
                   <item.icon className="text-2xl" />
                 </div>
               </Link>
@@ -38,11 +42,12 @@ export function MobileNav() {
                 {isActive && (
                   <motion.div
                     layoutId="mobile-active"
-                    className="absolute inset-0 bg-white/10 rounded-full"
+                    className="absolute inset-0 rounded-full"
+                    style={{ background: `${accent}20` }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <item.icon className={`text-xl relative z-10 ${isActive ? "text-blue-400" : "text-zinc-500"}`} />
+                <item.icon className="text-xl relative z-10" style={isActive ? { color: accent } : { color: "#71717a" }} />
               </div>
               <span className={`text-[10px] font-medium ${isActive ? "text-white" : "text-zinc-500"}`}>
                 {item.name}

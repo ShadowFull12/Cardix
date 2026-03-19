@@ -4,20 +4,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
-  FiHome, 
-  FiUser, 
-  FiGrid, 
-  FiHardDrive, 
-  FiSettings, 
-  FiLogOut,
-  FiBarChart2,
-  FiUsers,
-  FiShield,
-  FiStar,
-  FiCamera,
-  FiLock
+  FiHome, FiUser, FiGrid, FiHardDrive, FiSettings, FiLogOut,
+  FiBarChart2, FiUsers, FiShield, FiStar, FiCamera, FiLock
 } from "react-icons/fi";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const NAV_ITEMS = [
   { name: "Dashboard", href: "/dashboard", icon: FiHome },
@@ -32,6 +23,7 @@ const NAV_ITEMS = [
 export function Sidebar() {
   const pathname = usePathname();
   const { logout, user } = useAuth();
+  const { accent } = useTheme();
 
   const isAdmin = user?.role === "admin";
   const isPro = user?.plan === "pro" || user?.plan === "business";
@@ -39,7 +31,7 @@ export function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 border-r border-white/10 p-6 z-50" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }}>
       <div className="flex items-center gap-3 mb-10">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl">
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white font-bold text-xl" style={{ background: accent }}>
           C
         </div>
         <span className="text-xl font-bold font-mono tracking-tight text-white">Cardix</span>
@@ -52,17 +44,18 @@ export function Sidebar() {
             <Link key={item.name} href={item.href}>
               <div
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
-                ${isActive ? "text-white bg-white/10" : "text-zinc-400 hover:text-white hover:bg-white/5"}`}
+                ${isActive ? "text-white" : "text-zinc-400 hover:text-white hover:bg-white/5"}`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="active-nav"
-                    className="absolute inset-0 bg-white/10 rounded-xl"
+                    className="absolute inset-0 rounded-xl"
+                    style={{ background: `${accent}18`, border: `1px solid ${accent}25` }}
                     initial={false}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <item.icon className={`text-lg z-10 ${isActive ? "text-blue-400" : ""}`} />
+                <item.icon className="text-lg z-10" style={isActive ? { color: accent } : {}} />
                 <span className="font-medium z-10 flex-1">{item.name}</span>
                 {item.proOnly && !isPro && (
                   <FiLock className="text-xs text-zinc-600 z-10" />
@@ -72,17 +65,18 @@ export function Sidebar() {
           );
         })}
 
-        {/* Upgrade — only visible to free users */}
+        {/* Upgrade CTA */}
         {!isPro && (
           <Link href="/pro">
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-blue-400 hover:from-blue-500/20 hover:to-purple-500/20 transition-all mt-4">
+            <div className="flex items-center gap-3 px-4 py-3 rounded-xl border text-sm font-medium transition-all mt-4"
+              style={{ background: `${accent}08`, borderColor: `${accent}20`, color: accent }}
+            >
               <FiStar className="text-lg" />
-              <span className="font-medium text-sm">Upgrade to Pro</span>
+              <span>Upgrade to Pro</span>
             </div>
           </Link>
         )}
 
-        {/* Admin — only visible if user has admin role */}
         {isAdmin && (
           <Link href="/admin">
             <div
@@ -103,12 +97,11 @@ export function Sidebar() {
               {user?.photoURL ? (
                 <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-gradient-to-tr from-zinc-700 to-zinc-600 flex items-center justify-center text-sm font-bold">
+                <div className="w-full h-full flex items-center justify-center text-sm font-bold" style={{ background: `${accent}30`, color: accent }}>
                   {user?.displayName?.[0] || user?.email?.[0] || "?"}
                 </div>
               )}
             </div>
-            {/* Pro badge */}
             {isPro && (
               <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-500 flex items-center justify-center border-2 border-black shadow-lg">
                 <FiStar className="text-[8px] text-black" />

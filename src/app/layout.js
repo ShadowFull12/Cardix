@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -38,18 +39,20 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${inter.variable} font-sans min-h-screen bg-black text-white antialiased`}>
         <AuthProvider>
-          {children}
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              style: {
-                background: "#18181b",
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.1)",
-                backdropFilter: "blur(10px)",
-              },
-            }}
-          />
+          <ThemeProvider>
+            {children}
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                style: {
+                  background: "#18181b",
+                  color: "#fff",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(10px)",
+                },
+              }}
+            />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
