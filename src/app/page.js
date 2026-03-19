@@ -24,9 +24,7 @@ export default function HomePage() {
       {/* Nav */}
       <nav className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-xl shadow-blue-500/25">
-            C
-          </div>
+          <img src="/logo.png" alt="Cardix Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]" />
           <span className="text-xl font-bold font-mono tracking-tight">Cardix</span>
         </div>
         <div className="flex items-center gap-4">

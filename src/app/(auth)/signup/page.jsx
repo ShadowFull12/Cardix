@@ -65,9 +65,7 @@ export default function Signup() {
 
       <div className="w-full max-w-md relative z-10 my-8">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-2xl mx-auto flex items-center justify-center text-3xl font-bold mb-6 shadow-xl shadow-purple-500/20">
-            C
-          </div>
+          <img src="/logo.png" alt="Cardix Logo" className="w-16 h-16 mx-auto object-contain drop-shadow-[0_0_20px_rgba(168,85,247,0.3)] mb-6" />
           <h1 className="text-3xl font-bold font-mono tracking-tighter mb-2">Create Account</h1>
           <p className="text-zinc-400">Join Cardix and build your digital identity</p>
         </div>

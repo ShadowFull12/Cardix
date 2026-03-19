@@ -201,9 +201,7 @@ export default function OnboardingPage() {
             {step === 0 && (
               <div className="text-center space-y-8">
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }}>
-                  <div className="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white text-4xl font-bold shadow-2xl shadow-blue-500/25">
-                    C
-                  </div>
+                  <img src="/logo.png" alt="Cardix Logo" className="w-24 h-24 mx-auto object-contain drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
                 </motion.div>
                 <h1 className="text-4xl md:text-5xl font-bold font-mono tracking-tight">
                   Welcome to <span className="text-gradient">Cardix</span>
