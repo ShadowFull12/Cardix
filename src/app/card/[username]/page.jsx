@@ -110,8 +110,40 @@ export default function PublicProfileRoute({ params }) {
       <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[128px] pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[128px] pointer-events-none" />
 
-      <div className="w-full max-w-2xl relative z-10">
+      <div className="w-full max-w-2xl relative z-10 flex flex-col gap-6">
         <PublicCard profile={targetUser} viewer={user} shareMode={shareMode} />
+
+        {/* Dynamic CTA Banner */}
+        <div className="flex flex-col items-center justify-center p-6 border border-white/10 rounded-[2rem] bg-black/40 backdrop-blur-md shadow-2xl text-center transition-all duration-300">
+          {!user ? (
+            <>
+              <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-3">
+                <span className="font-bold font-mono text-xl text-white">C</span>
+              </div>
+              <p className="text-zinc-300 font-medium mb-4 max-w-sm">
+                Haven't got your Cardix yet? Get yours now completely for free!
+              </p>
+              <button 
+                onClick={() => router.push("/signup")}
+                className="px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-all hover:scale-105 active:scale-95"
+              >
+                Create Free Cardix
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-zinc-300 font-medium mb-4 max-w-sm">
+                Share your own digital business card with the world.
+              </p>
+              <button 
+                onClick={() => router.push("/dashboard")}
+                className="px-6 py-2.5 border border-white/20 text-white font-semibold rounded-full hover:bg-white/10 transition-all hover:scale-105 active:scale-95"
+              >
+                Go to Dashboard
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
