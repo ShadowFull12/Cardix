@@ -8,7 +8,7 @@ import { AnalyticsCard } from "@/components/dashboard/AnalyticsCard";
 import { QRDisplay } from "@/components/dashboard/QRDisplay";
 import { ShareDialog } from "@/components/profile/ShareDialog";
 import { ProfileSkeleton } from "@/components/ui/SkeletonLoader";
-import { FiEdit3, FiShare2, FiEye, FiZap, FiLink, FiUser, FiHardDrive, FiGrid, FiStar, FiArrowRight } from "react-icons/fi";
+import { FiEdit3, FiShare2, FiEye, FiZap, FiLink, FiUser, FiHardDrive, FiGrid, FiStar, FiArrowRight, FiShield } from "react-icons/fi";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -111,12 +111,21 @@ export default function Dashboard() {
             <p className="text-sm font-medium">Edit Profile</p>
           </div>
         </Link>
-        <Link href="/pro" className="group">
-          <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/5 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all text-center">
-            <FiStar className="mx-auto text-xl text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
-            <p className="text-sm font-medium">Go Pro</p>
-          </div>
-        </Link>
+        {user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise" ? (
+          <Link href="/audience" className="group">
+            <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/5 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all text-center">
+              <FiShield className="mx-auto text-xl text-blue-400 mb-2 group-hover:scale-110 transition-transform" />
+              <p className="text-sm font-medium">Audience</p>
+            </div>
+          </Link>
+        ) : (
+          <Link href="/pro" className="group">
+            <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/5 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all text-center">
+              <FiStar className="mx-auto text-xl text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
+              <p className="text-sm font-medium">Go Pro</p>
+            </div>
+          </Link>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -146,7 +155,12 @@ export default function Dashboard() {
                         <FiUser className="text-zinc-400" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-medium truncate">Unknown Scan from a Profile</p>
+                        <p className="text-sm font-medium truncate">
+                          {scan.uid === "anonymous" 
+                            ? ((user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise") && scan.device ? `Anonymous (${scan.device})` : "Anonymous Visitor")
+                            : ((user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise") ? "Identified User (See Audience)" : "Hidden Profile Scan")
+                          }
+                        </p>
                         <p className="text-xs text-zinc-500">
                           {new Date(scan.timestamp).toLocaleString()}
                         </p>

@@ -3,8 +3,9 @@
 import { useEffect, useState, use } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { getUserByUsername, incrementProfileViews, incrementQRScans, addRecentlyViewed, addScanHistory } from "@/lib/firestore";
+import { getUserByUsername, incrementProfileViews, incrementQRScans, addRecentlyViewed, addScanHistory, addProfileView } from "@/lib/firestore";
 import { PublicCard } from "@/components/card/PublicCard";
+import { UAParser } from "ua-parser-js";
 
 export default function PublicProfileRoute({ params }) {
   const unwrappedParams = use(params);
@@ -40,11 +41,15 @@ export default function PublicProfileRoute({ params }) {
           await addRecentlyViewed(user.uid, foundUser.uid);
         }
         
+        const parser = new UAParser(window.navigator.userAgent);
+        const deviceString = `${parser.getOS().name || "Unknown OS"} • ${parser.getBrowser().name || "Unknown Browser"}`;
+
         if (searchParams.get("source") === "qr") {
           await incrementQRScans(foundUser.uid);
-          await addScanHistory(foundUser.uid, user ? user.uid : "anonymous");
+          await addScanHistory(foundUser.uid, user ? user.uid : "anonymous", deviceString);
         } else {
           await incrementProfileViews(foundUser.uid);
+          await addProfileView(foundUser.uid, user ? user.uid : "anonymous", deviceString);
         }
 
         setTargetUser(foundUser);

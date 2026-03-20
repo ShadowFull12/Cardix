@@ -88,14 +88,23 @@ export async function incrementLinkClicks(uid) {
   });
 }
 
-// ─── Scan History ───
-export async function addScanHistory(uid, scannedUid) {
+// ─── Scan History & Profile Views ───
+export async function addScanHistory(uid, scannedUid, device = null) {
   const userDoc = await getDoc(doc(db, "users", uid));
   if (!userDoc.exists()) return;
   let history = userDoc.data().scanHistory || [];
-  history.unshift({ uid: scannedUid, timestamp: new Date().toISOString() });
+  history.unshift({ uid: scannedUid, timestamp: new Date().toISOString(), device });
   if (history.length > 50) history = history.slice(0, 50);
   return updateDoc(doc(db, "users", uid), { scanHistory: history });
+}
+
+export async function addProfileView(uid, viewerUid, device = null) {
+  const userDoc = await getDoc(doc(db, "users", uid));
+  if (!userDoc.exists()) return;
+  let views = userDoc.data().profileViews || [];
+  views.unshift({ uid: viewerUid, timestamp: new Date().toISOString(), device });
+  if (views.length > 50) views = views.slice(0, 50);
+  return updateDoc(doc(db, "users", uid), { profileViews: views });
 }
 
 // ─── Discover / Trending ───

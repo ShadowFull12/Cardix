@@ -28,9 +28,9 @@ const PLANS = [
     description: "Advanced tools for professionals & creators.",
     features: [
       "Everything in Free",
-      "Premium Templates & Custom CSS",
-      "Advanced Analytics & Tracking",
-      "Remove Cardix Watermark",
+      "Advanced Audience Management",
+      "Real-time Device Tracking & Graphs",
+      "Targeted Link Access Controls",
       "10GB Personal Vault Storage",
       "Custom Domain Support"
     ],

@@ -85,16 +85,18 @@ export function PublicCard({ profile, viewer, shareMode }) {
   const userLocation = profile.privateData?.location || "";
   const userWebsite = socialLinks.website || publicData.website || "";
 
-  // Share mode filters
-  const isMinimal = shareMode === "minimal";
-  const isContactOnly = shareMode === "contact";
+  // Share & Privacy modes
+  const isRestricted = viewer && profile.settings?.restrictedUsers?.[viewer.uid] === true;
+  const isMinimal = shareMode === "minimal" || isRestricted;
+  const isContactOnly = shareMode === "contact" && !isRestricted;
   const showHeader = !isContactOnly;
-  const showSocials = !isMinimal && !isContactOnly;
+  const showSocials = !isMinimal && !isContactOnly && !isRestricted;
 
-  // Privacy-aware contact data — email is public by default, phone/location are private by default
-  const showEmail = privacy.emailPublic !== false && userEmail;
-  const showPhone = privacy.phonePublic && userPhone;
-  const showLocation = privacy.locationPublic && userLocation;
+  // Privacy-aware contact data
+  const showEmail = !isRestricted && privacy.emailPublic !== false && userEmail;
+  const showPhone = !isRestricted && privacy.phonePublic && userPhone;
+  const showLocation = !isRestricted && privacy.locationPublic && userLocation;
+  const showWebsite = !isRestricted && userWebsite;
 
   const layoutOrder = profile.settings?.layoutOrder || ["header", "contact", "socials"];
 
@@ -127,6 +129,11 @@ export function PublicCard({ profile, viewer, shareMode }) {
                 <p className="text-zinc-400 leading-relaxed text-sm line-clamp-3">
                   {publicData.bio}
                 </p>
+              )}
+              {isRestricted && (
+                <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 text-[10px] font-bold uppercase tracking-widest border border-red-500/20">
+                  <FiLock className="w-3 h-3" /> Restricted Access
+                </div>
               )}
             </div>
           </div>
@@ -167,8 +174,8 @@ export function PublicCard({ profile, viewer, shareMode }) {
                 <FiMapPin className="text-zinc-400" /> {userLocation}
               </span>
             )}
-            {userWebsite && !isContactOnly && (
-              <a href={ensureAbsoluteUrl(userWebsite)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
+            {showWebsite && !isContactOnly && (
+              <a href={ensureAbsoluteUrl(showWebsite)} target="_blank" rel="noreferrer" onClick={handleLinkClick} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/40 border border-white/10 hover:bg-black/60 transition-colors">
                 <FiGlobe className="text-zinc-400" /> Website
               </a>
             )}

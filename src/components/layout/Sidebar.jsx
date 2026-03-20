@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { name: "Card Editor", href: "/card/preview", icon: FiGrid },
   { name: "My Network", href: "/network", icon: FiUsers },
   { name: "Analytics", href: "/analytics", icon: FiBarChart2, proOnly: true },
+  { name: "Audience", href: "/audience", icon: FiShield, proOnly: true },
 ];
 
 export function Sidebar() {

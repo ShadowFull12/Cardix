@@ -5,10 +5,28 @@ import { useAuth } from "@/contexts/AuthContext";
 import { FiActivity, FiPieChart, FiBarChart2, FiLock, FiStar, FiArrowRight } from "react-icons/fi";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function AnalyticsPage() {
   const { user } = useAuth();
-  const isPro = user?.plan === "pro" || user?.plan === "business";
+  const isPro = user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise";
+
+  // Calculate past 7 days data for the chart
+  const past7Days = [...Array(7)].map((_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    return d.toISOString().split("T")[0];
+  });
+
+  const chartData = past7Days.map(date => {
+    const viewsOnDate = (user?.profileViews || []).filter(v => v.timestamp.startsWith(date)).length;
+    const scansOnDate = (user?.scanHistory || []).filter(s => s.timestamp.startsWith(date)).length;
+    return {
+      name: new Date(date).toLocaleDateString("en-US", { weekday: "short" }),
+      views: viewsOnDate,
+      scans: scansOnDate
+    };
+  });
 
   // Paywall overlay for free users
   if (!isPro) {
@@ -97,21 +115,23 @@ export default function AnalyticsPage() {
       <GlassCard className="p-8">
         <div className="flex items-center gap-3 mb-6">
           <FiActivity className="text-xl text-emerald-400" />
-          <h3 className="text-lg font-semibold">Engagement Timeline</h3>
+          <h3 className="text-lg font-semibold">Engagement Timeline (Last 7 Days)</h3>
         </div>
-        <div className="h-48 w-full border-b border-l border-white/10 flex items-end justify-between px-2 pt-4">
-          {[40, 60, 30, 80, 50, 90, 70].map((h, i) => (
-            <div key={i} className="w-[10%] bg-blue-500/20 hover:bg-blue-500/40 transition-colors rounded-t-sm" style={{ height: `${h}%` }}></div>
-          ))}
-        </div>
-        <div className="flex justify-between w-full text-xs text-zinc-500 mt-2 px-2">
-          <span>Mon</span>
-          <span>Tue</span>
-          <span>Wed</span>
-          <span>Thu</span>
-          <span>Fri</span>
-          <span>Sat</span>
-          <span>Sun</span>
+        
+        <div className="h-64 w-full mt-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
+              <XAxis dataKey="name" stroke="rgba(255,255,255,0.5)" tick={{fill: 'rgba(255,255,255,0.5)', fontSize: 12}} />
+              <YAxis stroke="rgba(255,255,255,0.5)" tick={{fill: 'rgba(255,255,255,0.5)', fontSize: 12}} allowDecimals={false} />
+              <Tooltip 
+                contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                itemStyle={{ color: '#fff' }}
+              />
+              <Line type="monotone" dataKey="views" name="Profile Views" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+              <Line type="monotone" dataKey="scans" name="QR Scans" stroke="#a855f7" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </GlassCard>
     </div>

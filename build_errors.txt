@@ -1,0 +1,268 @@
+﻿
+> cardix-temp@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.2.0 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+node.exe : 
+At C:\Program F
+iles\nodejs\npm
+.ps1:29 char:3
++   & 
+$NODE_EXE 
+$NPM_CLI_JS 
+$args
++   ~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+~~~
+    + Category 
+   Info        
+      : NotS   
+ pecified:     
+(:String)     
+[], Remote    
+Exception
+    + FullyQua 
+   lifiedErro  
+  rId : Nati   
+ veCommandE    
+rror
+ 
+> Build error 
+occurred
+Error: 
+Turbopack 
+build failed 
+with 2 errors:
+./src/app/card/
+[username]/page
+.jsx:8:1
+Export default 
+doesn't exist 
+in target 
+module
+  [90m 6 
+|[0m [36mimpo
+rt[0m { getUse
+rByUsername, in
+crementProfileV
+iews, increment
+QRScans, addRec
+entlyViewed, 
+ad...
+  [90m 7 
+|[0m [36mimpo
+rt[0m { [33mP
+ublicCard[0m 
+} 
+[36mfrom[0m 
+[32m"@/componen
+ts/card/PublicC
+ard"[0m;
+[31m[1m>[0m 
+[90m 8 |[0m 
+[36mimport[0m 
+[33mUAParser[
+0m 
+[36mfrom[0m 
+[32m"ua-parser-
+js"[0m;
+  [90m   
+|[0m [31m[1m
+^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+^^^^^^[0m
+  [90m 9 |[0m
+  [90m10 
+|[0m [36mexpo
+rt[0m [36mdef
+ault[0m [36mf
+unction[0m [3
+3mPublicProfile
+Route[0m({ 
+params }) {
+  [90m11 
+|[0m   
+[36mconst[0m 
+unwrappedParams
+ = use(params);
+
+The export 
+default was 
+not found in 
+module [project
+]/node_modules/
+ua-parser-js/sr
+c/main/ua-parse
+r.mjs 
+[app-client] 
+(ecmascript).
+Did you mean 
+to import 
+UAParser?
+All exports of 
+the module are 
+statically 
+known (It 
+doesn't have 
+dynamic 
+exports). So 
+it's known 
+statically 
+that the 
+requested 
+export doesn't 
+exist.
+
+Import traces:
+  Client 
+Component 
+Browser:
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Client 
+Component 
+Browser]
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Server 
+Component]
+
+  Client 
+Component SSR:
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Client 
+Component SSR]
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Server 
+Component]
+
+
+./src/app/card/
+[username]/page
+.jsx:8:1
+Export default 
+doesn't exist 
+in target 
+module
+  [90m 6 
+|[0m [36mimpo
+rt[0m { getUse
+rByUsername, in
+crementProfileV
+iews, increment
+QRScans, addRec
+entlyViewed, 
+ad...
+  [90m 7 
+|[0m [36mimpo
+rt[0m { [33mP
+ublicCard[0m 
+} 
+[36mfrom[0m 
+[32m"@/componen
+ts/card/PublicC
+ard"[0m;
+[31m[1m>[0m 
+[90m 8 |[0m 
+[36mimport[0m 
+[33mUAParser[
+0m 
+[36mfrom[0m 
+[32m"ua-parser-
+js"[0m;
+  [90m   
+|[0m [31m[1m
+^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+^^^^^^[0m
+  [90m 9 |[0m
+  [90m10 
+|[0m [36mexpo
+rt[0m [36mdef
+ault[0m [36mf
+unction[0m [3
+3mPublicProfile
+Route[0m({ 
+params }) {
+  [90m11 
+|[0m   
+[36mconst[0m 
+unwrappedParams
+ = use(params);
+
+The export 
+default was 
+not found in 
+module [project
+]/node_modules/
+ua-parser-js/sr
+c/main/ua-parse
+r.mjs 
+[app-ssr] 
+(ecmascript).
+Did you mean 
+to import 
+UAParser?
+All exports of 
+the module are 
+statically 
+known (It 
+doesn't have 
+dynamic 
+exports). So 
+it's known 
+statically 
+that the 
+requested 
+export doesn't 
+exist.
+
+Import traces:
+  Client 
+Component 
+Browser:
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Client 
+Component 
+Browser]
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Server 
+Component]
+
+  Client 
+Component SSR:
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Client 
+Component SSR]
+    ./src/app/c
+ard/[username]/
+page.jsx 
+[Server 
+Component]
+
+
+    at 
+<unknown> (./sr
+c/app/card/[use
+rname]/page.jsx
+:8:1)
+    at 
+<unknown> (./sr
+c/app/card/[use
+rname]/page.jsx
+:8:1)
