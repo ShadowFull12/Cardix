@@ -7,6 +7,7 @@ import { updateUserProfile } from "@/lib/firestore";
 import { useRouter } from "next/navigation";
 import { FiArrowRight, FiArrowLeft, FiCamera, FiCheck, FiUpload } from "react-icons/fi";
 import toast from "react-hot-toast";
+import { ImageCropper } from "@/components/ui/ImageCropper";
 
 /** Compress a base64 image to a given max dimension */
 function compressImage(base64, maxSize = 256) {
@@ -56,6 +57,7 @@ export default function OnboardingPage() {
 
   const [avatar, setAvatar] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
+  const [cropSrc, setCropSrc] = useState(null); // raw image awaiting crop
   const [template, setTemplate] = useState("default");
   const [accentColor, setAccentColor] = useState("#3b82f6");
   const [cardBg, setCardBg] = useState("#000000");
@@ -77,8 +79,20 @@ export default function OnboardingPage() {
     if (!file) return;
     setAvatar(file);
     const reader = new FileReader();
-    reader.onloadend = () => setAvatarPreview(reader.result);
+    reader.onloadend = () => setCropSrc(reader.result); // open crop modal instead of setting preview directly
     reader.readAsDataURL(file);
+    // reset input so same file can be re-selected
+    e.target.value = "";
+  };
+
+  const handleCropComplete = (croppedBase64) => {
+    setAvatarPreview(croppedBase64);
+    setCropSrc(null);
+  };
+
+  const handleCropCancel = () => {
+    setCropSrc(null);
+    setAvatar(null);
   };
 
   const handleFinish = async () => {
@@ -154,6 +168,15 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Image Crop Modal */}
+      {cropSrc && (
+        <ImageCropper
+          imageSrc={cropSrc}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+        />
+      )}
+
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full blur-[128px]" style={{ background: `${accentColor}15` }} />

@@ -10,18 +10,34 @@ import { ShareDialog } from "@/components/profile/ShareDialog";
 import { ProfileSkeleton } from "@/components/ui/SkeletonLoader";
 import { FiEdit3, FiShare2, FiEye, FiZap, FiLink, FiUser, FiHardDrive, FiGrid, FiStar, FiArrowRight, FiShield } from "react-icons/fi";
 import Link from "next/link";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shareOpen, setShareOpen] = useState(false);
+  const [resolvedProfiles, setResolvedProfiles] = useState({});
+  const isPro = user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise";
 
   useEffect(() => {
     async function loadData() {
       if (user?.uid) {
         const data = await getUserProfile(user.uid);
         setProfile(data);
+        // Resolve real profiles for QR scanners (Pro feature)
+        if (isPro && data?.scanHistory?.length) {
+          const uids = [...new Set(data.scanHistory.map(s => s.uid).filter(u => u && u !== "anonymous"))];
+          const resolved = {};
+          for (const uid of uids.slice(0, 10)) {
+            try {
+              const snap = await getDoc(doc(db, "users", uid));
+              if (snap.exists()) resolved[uid] = snap.data();
+            } catch {}
+          }
+          setResolvedProfiles(resolved);
+        }
       }
       setLoading(false);
     }
@@ -148,31 +164,35 @@ export default function Dashboard() {
 
             {profile.scanHistory?.length > 0 ? (
               <div className="space-y-4">
-                {profile.scanHistory.slice(0, 5).map((scan, i) => (
-                  <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5 gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shrink-0">
-                        <FiUser className="text-zinc-400" />
+                {profile.scanHistory.slice(0, 5).map((scan, i) => {
+                  const isAnon = scan.uid === "anonymous";
+                  const resolved = !isAnon && isPro ? resolvedProfiles[scan.uid] : null;
+                  const displayName = isAnon
+                    ? (isPro && scan.device ? `Anonymous • ${scan.device}` : "Anonymous Visitor")
+                    : (resolved ? (resolved.publicData?.name || resolved.displayName || "Cardix User") : (isPro ? "Loading profile…" : "Hidden Scan"));
+                  const avatarUrl = resolved?.photoURL || null;
+
+                  return (
+                    <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5 gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-white/10">
+                          {avatarUrl
+                            ? <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" />
+                            : <FiUser className="text-zinc-400" />}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium truncate">{displayName}</p>
+                          <p className="text-xs text-zinc-500">{new Date(scan.timestamp).toLocaleString()}</p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium truncate">
-                          {scan.uid === "anonymous" 
-                            ? ((user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise") && scan.device ? `Anonymous (${scan.device})` : "Anonymous Visitor")
-                            : ((user?.plan === "pro" || user?.plan === "business" || user?.plan === "enterprise") ? "Identified User (See Audience)" : "Hidden Profile Scan")
-                          }
-                        </p>
-                        <p className="text-xs text-zinc-500">
-                          {new Date(scan.timestamp).toLocaleString()}
-                        </p>
-                      </div>
+                      <Link href={isPro ? "/audience" : "/analytics"} className="shrink-0">
+                        <button className="w-full sm:w-auto px-4 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-lg transition-colors border border-blue-500/20">
+                          {isPro ? "See in Audience" : "View Details"}
+                        </button>
+                      </Link>
                     </div>
-                    <Link href="/analytics" className="shrink-0">
-                      <button className="w-full sm:w-auto px-4 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-lg transition-colors border border-blue-500/20">
-                        View Details
-                      </button>
-                    </Link>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center h-48 text-center px-4">
