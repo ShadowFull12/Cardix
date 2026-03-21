@@ -44,12 +44,16 @@ export default function PublicProfileRoute({ params }) {
         const parser = new UAParser(window.navigator.userAgent);
         const deviceString = `${parser.getOS().name || "Unknown OS"} • ${parser.getBrowser().name || "Unknown Browser"}`;
 
+        const viewerUid = user ? user.uid : "anonymous";
+        
+        // Every visit counts as a profile view
+        await incrementProfileViews(foundUser.uid);
+        await addProfileView(foundUser.uid, viewerUid, deviceString);
+
+        // QR scans log an additional engagement metric
         if (searchParams.get("source") === "qr") {
           await incrementQRScans(foundUser.uid);
-          await addScanHistory(foundUser.uid, user ? user.uid : "anonymous", deviceString);
-        } else {
-          await incrementProfileViews(foundUser.uid);
-          await addProfileView(foundUser.uid, user ? user.uid : "anonymous", deviceString);
+          await addScanHistory(foundUser.uid, viewerUid, deviceString);
         }
 
         setTargetUser(foundUser);
