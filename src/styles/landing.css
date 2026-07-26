@@ -1,0 +1,551 @@
+/* ==========================================================================
+   Cardix landing surface.
+   Direction: a precision instrument. Cold graphite, warm paper text, one cyan
+   accent, gold reserved for Pro. Scoped to .lp so the signed-in app is
+   untouched. Dark theme locked for the whole page, matching the product.
+   ========================================================================== */
+
+.lp {
+  /* Neutrals, tinted toward the accent hue. No #000, no #fff, no #888. */
+  --ink-950: #08090c;
+  --ink-925: #0a0c11;
+  --ink-900: #0d1016;
+  --ink-850: #11151d;
+  --ink-800: #161b25;
+  --ink-750: #1c222e;
+  --ink-700: #242c3a;
+
+  --paper: #f1efe9;
+  --paper-dim: #a8b0be;
+  --paper-faint: #7b8595;
+
+  --accent: #2ed3e0;
+  --accent-soft: #7fe6ee;
+  --accent-ink: #04191c;
+  --gold: #e9b44c;
+
+  --line: rgba(241, 239, 233, 0.09);
+  --line-strong: rgba(241, 239, 233, 0.16);
+  --surface: rgba(241, 239, 233, 0.035);
+  --surface-hi: rgba(241, 239, 233, 0.06);
+
+  /* One radius system: pill for interactive, 20px for panels, 28px for cards. */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Emil's curves. The built-in CSS easings are too weak to read as intent. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --d-press: 140ms;
+  --d-fast: 180ms;
+  --d-base: 240ms;
+
+  --shadow-card: 0 1px 0 rgba(241, 239, 233, 0.05) inset,
+    0 18px 40px -22px rgba(0, 0, 0, 0.9), 0 2px 8px -4px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 1px 0 rgba(241, 239, 233, 0.07) inset,
+    0 44px 84px -34px rgba(0, 0, 0, 0.95), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+
+  --lp-display: var(--font-lp-display), ui-sans-serif, system-ui, sans-serif;
+  --lp-sans: var(--font-lp-sans), ui-sans-serif, system-ui, sans-serif;
+  --lp-mono: var(--font-lp-mono), ui-monospace, monospace;
+
+  background-color: var(--ink-950);
+  color: var(--paper);
+  font-family: var(--lp-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* --------------------------------------------------------------- typography */
+
+.lp-display {
+  font-family: var(--lp-display);
+  font-weight: 600;
+  font-variation-settings: "opsz" 48;
+  letter-spacing: -0.032em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.lp-hi {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.lp-mono {
+  font-family: var(--lp-mono);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.lp-num {
+  font-family: var(--lp-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.lp-measure {
+  max-width: 60ch;
+}
+
+/* ------------------------------------------------------------------ surfaces */
+
+.lp-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Fine engineering grid, radially masked so it reads as depth, not wallpaper. */
+.lp-grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+      to right,
+      rgba(241, 239, 233, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(241, 239, 233, 0.05) 1px, transparent 1px);
+  background-size: 62px 62px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 76% 60% at 50% 0%,
+    #000 0%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(
+    ellipse 76% 60% at 50% 0%,
+    #000 0%,
+    transparent 76%
+  );
+}
+
+/* Accent bloom built from a gradient, not a blurred div. */
+.lp-bloom {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(46, 211, 224, 0.16) 0%,
+    rgba(46, 211, 224, 0.06) 34%,
+    transparent 68%
+  );
+}
+
+/* Grain lives on a fixed, pointer-events-none layer so it never repaints
+   during scroll. */
+.lp-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* -------------------------------------------------------------- focus + skip */
+
+.lp :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.lp-skip {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--r-sm);
+  background: var(--ink-800);
+  border: 1px solid var(--line-strong);
+  font-size: 13px;
+  transition: top var(--d-base) var(--ease-out);
+}
+.lp-skip:focus-visible {
+  top: 16px;
+}
+
+/* ---------------------------------------------------------- entrance (CSS) */
+
+/* Predetermined entrances run as CSS so they stay smooth while the rest of the
+   page is still hydrating. --d sets the stagger. */
+.lp-rise {
+  animation: lp-rise 760ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes lp-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Line-mask headline reveal. The clip lives on the wrapper, the travel on the
+   inner span, so descenders are never sheared. */
+.lp-linemask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+.lp-linemask > span {
+  display: block;
+  animation: lp-linein 900ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes lp-linein {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Deal-in for the hero deck. Predetermined, so CSS again. */
+.lp-deal {
+  animation: lp-deal 1000ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes lp-deal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 46px, 0) rotate(-4deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+.lp-deal-back {
+  animation: lp-deal-back 1000ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes lp-deal-back {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    opacity: var(--o, 0.5);
+    transform: translate3d(var(--tx, 0), var(--ty, 0), 0) rotate(var(--rz, 0deg));
+  }
+}
+
+/* --------------------------------------------------------------------- cards */
+
+.lp-card-face {
+  background: linear-gradient(
+    152deg,
+    var(--ink-850) 0%,
+    var(--ink-900) 46%,
+    #0b1418 100%
+  );
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lift);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Specular sheen tracking the pointer through --mx / --my. */
+.lp-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    440px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(241, 239, 233, 0.1),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity var(--d-base) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lp-card-face:hover .lp-sheen {
+    opacity: 1;
+  }
+}
+
+/* Spotlight border for grid tiles: the edge lights under the cursor. */
+.lp-spot {
+  position: relative;
+  isolation: isolate;
+}
+.lp-spot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(46, 211, 224, 0.55),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--d-base) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lp-spot:hover::before,
+  .lp-spot:focus-within::before {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------ marquee */
+
+.lp-marquee {
+  display: flex;
+  width: max-content;
+  animation: lp-slide var(--dur, 58s) linear infinite;
+}
+.lp-marquee-wrap:hover .lp-marquee {
+  animation-play-state: paused;
+}
+@keyframes lp-slide {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* --------------------------------------------------------------------- scan */
+
+.lp-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(46, 211, 224, 0.3),
+    transparent
+  );
+  animation: lp-sweep 3s var(--ease-in-out) infinite;
+}
+@keyframes lp-sweep {
+  0% {
+    transform: translateY(-40%);
+    opacity: 0;
+  }
+  18%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340%);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------- interaction */
+
+.lp-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  white-space: nowrap;
+  transition: background-color var(--d-fast) var(--ease-out),
+    border-color var(--d-fast) var(--ease-out),
+    color var(--d-fast) var(--ease-out),
+    box-shadow var(--d-fast) var(--ease-out),
+    transform var(--d-press) var(--ease-out);
+}
+.lp-btn-primary {
+  background: var(--paper);
+  color: var(--ink-950);
+  box-shadow: 0 10px 30px -14px rgba(241, 239, 233, 0.38);
+}
+.lp-btn-ghost {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  color: var(--paper);
+}
+.lp-btn-accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 10px 30px -14px rgba(46, 211, 224, 0.55);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lp-btn-primary:hover {
+    background: #fffdf8;
+    box-shadow: 0 16px 36px -14px rgba(241, 239, 233, 0.52);
+  }
+  .lp-btn-ghost:hover {
+    background: var(--surface-hi);
+    border-color: rgba(241, 239, 233, 0.28);
+  }
+  .lp-btn-accent:hover {
+    background: var(--accent-soft);
+  }
+  .lp-btn:hover {
+    transform: translate3d(0, -1px, 0);
+  }
+}
+/* Press feedback: the interface confirms it heard you. */
+.lp-btn:active {
+  transform: scale(0.97);
+}
+
+.lp-tile {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  transition: background-color var(--d-base) var(--ease-out),
+    border-color var(--d-base) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lp-tile:hover {
+    background: var(--surface-hi);
+    border-color: var(--line-strong);
+  }
+}
+
+.lp-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--d-base) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lp-underline:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* Nav scroll-spy: the active section's label stays lit. */
+.lp-navlink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--paper-dim);
+  transition: color var(--d-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lp-navlink:hover {
+    color: var(--paper);
+  }
+}
+.lp-navlink[data-active="true"] {
+  color: var(--paper);
+}
+
+/* ----------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-marquee,
+  .lp-scan {
+    animation: none;
+  }
+  /* Keep the meaning, drop the movement: a static reading line. */
+  .lp-scan {
+    top: 50%;
+    height: 2px;
+    background: rgba(46, 211, 224, 0.45);
+  }
+  .lp-marquee-wrap {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  /* Entrances fade instead of travelling. */
+  .lp-rise,
+  .lp-deal,
+  .lp-deal-back,
+  .lp-linemask > span {
+    animation-duration: 220ms;
+    animation-delay: 0ms;
+    animation-name: lp-fade;
+  }
+  .lp-deal-back {
+    animation-name: lp-fade-back;
+  }
+  @keyframes lp-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes lp-fade-back {
+    from {
+      opacity: 0;
+      transform: translate3d(var(--tx, 0), var(--ty, 0), 0);
+    }
+    to {
+      opacity: var(--o, 0.5);
+      transform: translate3d(var(--tx, 0), var(--ty, 0), 0);
+    }
+  }
+  .lp-linemask {
+    overflow: visible;
+  }
+  .lp-btn:hover,
+  .lp-btn:active {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------- scroll reveal (CSS) */
+
+/* Driven by IntersectionObserver toggling one class, so the animation itself
+   runs as a CSS transition off the main thread. No scroll listeners. */
+.lp-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 620ms var(--ease-out), transform 620ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.lp-reveal[data-in="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-reveal {
+    transform: none;
+    transition: opacity 200ms linear;
+    transition-delay: 0ms;
+  }
+  .lp-reveal[data-in="true"] {
+    transform: none;
+  }
+}
