@@ -106,7 +106,7 @@ export default function AnalyticsPage() {
                 <FiLock className="text-3xl text-blue-400" />
               </div>
               <h2 className="text-2xl font-bold font-mono mb-3">Unlock Analytics</h2>
-              <p className="text-zinc-400 mb-8 leading-relaxed">Get detailed insights, viewer identities, device breakdowns, and traffic graphs with Cardix Pro.</p>
+              <p className="text-zinc-400 mb-8 leading-relaxed">Get detailed insights, viewer identities, device breakdowns, and traffic graphs with Cardixx Pro.</p>
               <Link href="/pro" className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl font-bold transition-all shadow-xl shadow-blue-500/25">
                 <FiStar /> Upgrade to Pro <FiArrowRight />
               </Link>
@@ -235,7 +235,7 @@ export default function AnalyticsPage() {
             {recentViewers.map((view, i) => {
               const isAnon = view.uid === "anonymous";
               const resolved = !isAnon ? resolvedViewers[view.uid] : null;
-              const name = isAnon ? "Anonymous Visitor" : (resolved?.publicData?.name || resolved?.displayName || "Cardix User");
+              const name = isAnon ? "Anonymous Visitor" : (resolved?.publicData?.name || resolved?.displayName || "Cardixx User");
               const avatar = resolved?.photoURL;
               return (
                 <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors">

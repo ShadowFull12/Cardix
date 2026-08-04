@@ -143,7 +143,7 @@ export default function OnboardingPage() {
         scanHistory: [],
       });
 
-      toast.success("Your Cardix is ready! 🎉");
+      toast.success("Your Cardixx is ready! 🎉");
       router.push("/dashboard");
     } catch (err) {
       console.error(err);
@@ -224,10 +224,10 @@ export default function OnboardingPage() {
             {step === 0 && (
               <div className="text-center space-y-8">
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }}>
-                  <img src="/logo.png" alt="Cardix Logo" className="w-32 h-32 mx-auto object-contain drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
+                  <img src="/logo.png" alt="Cardixx Logo" className="w-32 h-32 mx-auto object-contain drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
                 </motion.div>
                 <h1 className="text-4xl md:text-5xl font-bold font-mono tracking-tight">
-                  Welcome to <span className="text-gradient">Cardix</span>
+                  Welcome to <span className="text-gradient">Cardixx</span>
                 </h1>
                 <p className="text-lg text-zinc-400 max-w-md mx-auto">
                   Let&apos;s set up your digital identity in just a few steps.
@@ -394,7 +394,7 @@ export default function OnboardingPage() {
               <div className="space-y-8">
                 <div className="text-center mb-4">
                   <h2 className="text-3xl font-bold font-mono">Your Card Preview</h2>
-                  <p className="text-zinc-400 mt-2">Here&apos;s how your Cardix will look</p>
+                  <p className="text-zinc-400 mt-2">Here&apos;s how your Cardixx will look</p>
                 </div>
 
                 {/* Full Preview Card */}
@@ -436,7 +436,7 @@ export default function OnboardingPage() {
                     )}
                   </div>
                   <div className="mt-6 pt-4 border-t border-white/5 text-center">
-                    <span className="text-[10px] text-zinc-600 font-mono uppercase tracking-widest">Powered by Cardix</span>
+                    <span className="text-[10px] text-zinc-600 font-mono uppercase tracking-widest">Powered by Cardixx</span>
                   </div>
                 </div>
               </div>
@@ -472,7 +472,7 @@ export default function OnboardingPage() {
             {saving ? (
               <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Creating...</>
             ) : (
-              <><FiCheck /> Publish My Cardix</>
+              <><FiCheck /> Publish My Cardixx</>
             )}
           </button>
         )}

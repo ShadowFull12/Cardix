@@ -80,7 +80,7 @@ export default function NetworkPage() {
               </div>
               <div className="overflow-hidden">
                 <h4 className="font-semibold truncate">{profile.publicData?.name || profile.username}</h4>
-                <p className="text-xs text-zinc-400 truncate">{profile.publicData?.role || "Cardix User"}</p>
+                <p className="text-xs text-zinc-400 truncate">{profile.publicData?.role || "Cardixx User"}</p>
               </div>
             </GlassCard>
           </Link>

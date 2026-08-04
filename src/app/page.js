@@ -12,20 +12,20 @@ import { Faq } from "@/components/landing/Faq";
 import { Closer, LandingFooter } from "@/components/landing/Closer";
 
 export const metadata = {
-  title: "Cardix, your business card in one scan",
+  title: "Cardixx, your business card in one scan",
   description:
-    "Cardix puts your contacts, links and socials on one card with a QR code. They scan it, your card opens in their browser, they save you in a tap. Free forever plan.",
+    "Cardixx puts your contacts, links and socials on one card with a QR code. They scan it, your card opens in their browser, they save you in a tap. Free forever plan.",
   openGraph: {
-    title: "Cardix, your business card in one scan",
+    title: "Cardixx, your business card in one scan",
     description:
       "A digital identity card with a branded QR code, expiring share links, analytics and a personal vault.",
-    url: "https://cardix1.vercel.app",
-    siteName: "Cardix",
+    url: "https://cardixx1.vercel.app",
+    siteName: "Cardixx",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cardix, your business card in one scan",
+    title: "Cardixx, your business card in one scan",
     description:
       "A digital identity card with a branded QR code, expiring share links, analytics and a personal vault.",
   },

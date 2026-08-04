@@ -123,7 +123,7 @@ export function LandingFooter() {
                 className="h-8 w-8 object-contain"
               />
               <span className="lp-display text-[17px] tracking-[-0.03em]">
-                Cardix
+                Cardixx
               </span>
             </div>
             <p className="lp-measure mt-4 max-w-xs text-[14px] leading-relaxed text-[var(--paper-faint)]">
@@ -158,7 +158,7 @@ export function LandingFooter() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[13px] text-[var(--paper-faint)]">
-            © 2026 Cardix
+            © 2026 Cardixx
           </p>
           <p className="text-[13px] text-[var(--paper-faint)]">
             In beta. Expect rough edges, and tell us about them.

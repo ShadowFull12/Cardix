@@ -29,7 +29,7 @@ export default function ScanPage() {
           aspectRatio: 1,
         },
         (decodedText) => {
-          // Check if it's a Cardix URL
+          // Check if it's a Cardixx URL
           if (decodedText.includes("/card/") || decodedText.includes("/share/")) {
             html5Qr.stop().catch(console.error);
             setScanning(false);
@@ -48,7 +48,7 @@ export default function ScanPage() {
               setTimeout(() => router.push(`${decodedText}${connector}source=qr`), 500);
             }
           } else {
-            toast.error("Not a Cardix QR code");
+            toast.error("Not a Cardixx QR code");
           }
         },
         () => {} // Error callback (ignore scan errors)
@@ -84,7 +84,7 @@ export default function ScanPage() {
     <div className="max-w-md mx-auto flex flex-col items-center min-h-[60vh] space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold font-mono tracking-tight text-white mb-2">Scan QR Code</h1>
-        <p className="text-zinc-400">Point your camera at a Cardix QR code</p>
+        <p className="text-zinc-400">Point your camera at a Cardixx QR code</p>
       </div>
 
       <GlassCard className="w-full overflow-hidden" hover={false}>

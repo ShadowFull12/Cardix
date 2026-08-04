@@ -89,7 +89,7 @@ export default function AudiencePage() {
     <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
         <h1 className="text-3xl font-bold font-mono tracking-tight text-white mb-2">Audience Management</h1>
-        <p className="text-zinc-400">Track who is viewing your Cardix and manage their access to your private links.</p>
+        <p className="text-zinc-400">Track who is viewing your Cardixx and manage their access to your private links.</p>
       </div>
 
       <div className="flex gap-4 border-b border-white/10 pb-4">

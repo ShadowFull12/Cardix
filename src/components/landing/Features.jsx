@@ -233,7 +233,7 @@ function ScannerPreview() {
         ))}
         <span className="lp-scan" />
         <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[11px] text-[var(--paper-faint)]">
-          Looking for a Cardix code
+          Looking for a Cardixx code
         </span>
       </div>
     </div>
@@ -270,7 +270,7 @@ const TILES = [
   {
     span: "lg:col-span-4",
     title: "Scan other people's cards",
-    body: "Point the built-in scanner at any Cardix code to open it and save it to your network.",
+    body: "Point the built-in scanner at any Cardixx code to open it and save it to your network.",
     Preview: ScannerPreview,
   },
 ];

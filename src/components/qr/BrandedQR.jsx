@@ -33,7 +33,7 @@ export function BrandedQR({ username, size = 200, accentColor = "#3b82f6" }) {
 
   const baseUrl = typeof window !== "undefined"
     ? `${window.location.origin}/card/${username}`
-    : `https://cardix.app/card/${username}`;
+    : `https://cardixx.app/card/${username}`;
 
   const qrImageUrl = buildQrUrl(`${baseUrl}?source=qr`, size * 2, accentColor);
 
@@ -70,13 +70,13 @@ export function BrandedQR({ username, size = 200, accentColor = "#3b82f6" }) {
         ctx.fillStyle = accentColor;
         ctx.font = "bold 16px monospace";
         ctx.textAlign = "center";
-        ctx.fillText("CARDIX", canvas.width / 2, size + padding + 32);
+        ctx.fillText("CARDIXX", canvas.width / 2, size + padding + 32);
         ctx.fillStyle = "#666";
         ctx.font = "11px monospace";
         ctx.fillText(`@${username}`, canvas.width / 2, size + padding + 50);
 
         const link = document.createElement("a");
-        link.download = `cardix-${username}-qr.png`;
+        link.download = `cardixx-${username}-qr.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
         toast.success("QR downloaded!");
@@ -146,7 +146,7 @@ export function BrandedQR({ username, size = 200, accentColor = "#3b82f6" }) {
 
       {/* Branding */}
       <div className="mt-5 text-center">
-        <p className="text-xs font-mono font-bold tracking-[0.3em] uppercase" style={{ color: accentColor }}>CARDIX</p>
+        <p className="text-xs font-mono font-bold tracking-[0.3em] uppercase" style={{ color: accentColor }}>CARDIXX</p>
         <p className="text-[10px] text-zinc-500 mt-0.5">@{username}</p>
       </div>
 

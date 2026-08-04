@@ -142,7 +142,7 @@ export function ProfileForm({ initialData, onSave, saving, authEmail }) {
                 <label className="block text-sm font-medium text-zinc-400 mb-2">Username (Unique URL)</label>
                 <div className="flex flex-col sm:flex-row bg-zinc-900/50 border border-white/10 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500/50 w-full">
                   <div className="px-3 md:px-4 py-2.5 sm:py-3 bg-white/5 text-zinc-500 border-b sm:border-b-0 sm:border-r border-white/10 flex items-center shrink-0 text-xs md:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                    cardix.app/card/
+                    cardixx.app/card/
                   </div>
                   <input
                     type="text"

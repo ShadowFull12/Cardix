@@ -64,7 +64,7 @@ export default function Dashboard() {
             <h1 className="text-3xl font-bold font-mono tracking-tight text-white mb-2">
               Welcome back, {profile.publicData?.name || "User"}
             </h1>
-            <p className="text-zinc-400">Here&apos;s what&apos;s happening with your Cardix today.</p>
+            <p className="text-zinc-400">Here&apos;s what&apos;s happening with your Cardixx today.</p>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/profile">
@@ -169,7 +169,7 @@ export default function Dashboard() {
                   const resolved = !isAnon && isPro ? resolvedProfiles[scan.uid] : null;
                   const displayName = isAnon
                     ? (isPro && scan.device ? `Anonymous • ${scan.device}` : "Anonymous Visitor")
-                    : (resolved ? (resolved.publicData?.name || resolved.displayName || "Cardix User") : (isPro ? "Loading profile…" : "Hidden Scan"));
+                    : (resolved ? (resolved.publicData?.name || resolved.displayName || "Cardixx User") : (isPro ? "Loading profile…" : "Hidden Scan"));
                   const avatarUrl = resolved?.photoURL || null;
 
                   return (

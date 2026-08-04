@@ -4,7 +4,7 @@ import { createTemporaryShare, getTemporaryShare } from "./firestore";
  * Smart Share — generate a share URL with different levels of detail
  */
 export function generateShareUrl(username, mode = "full") {
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://cardix.app";
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://cardixx.app";
   
   switch (mode) {
     case "minimal":
@@ -22,7 +22,7 @@ export function generateShareUrl(username, mode = "full") {
  */
 export async function createTempShareLink(uid, minutes = 30) {
   const { shareId, expiresAt } = await createTemporaryShare(uid, minutes);
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://cardix.app";
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://cardixx.app";
   return {
     url: `${baseUrl}/share/${shareId}`,
     expiresAt,
@@ -58,7 +58,7 @@ export function generateVCard(profile) {
   if (pub.socialLinks?.linkedin) lines.push(`URL:${pub.socialLinks.linkedin}`);
   if (pub.socialLinks?.twitter) lines.push(`X-SOCIALPROFILE;TYPE=twitter:${pub.socialLinks.twitter}`);
   
-  lines.push(`URL:${typeof window !== "undefined" ? window.location.origin : "https://cardix.app"}/card/${profile.username}`);
+  lines.push(`URL:${typeof window !== "undefined" ? window.location.origin : "https://cardixx.app"}/card/${profile.username}`);
   lines.push("END:VCARD");
   
   return lines.join("\n");
@@ -87,8 +87,8 @@ export async function shareProfile(username, name) {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: `${name}'s Cardix Profile`,
-        text: `Check out ${name}'s digital identity card on Cardix`,
+        title: `${name}'s Cardixx Profile`,
+        text: `Check out ${name}'s digital identity card on Cardixx`,
         url,
       });
       return true;

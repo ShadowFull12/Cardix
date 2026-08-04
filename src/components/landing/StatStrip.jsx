@@ -13,7 +13,7 @@ const STATS = [
 export function StatStrip() {
   return (
     <section
-      aria-label="Cardix at a glance"
+      aria-label="Cardixx at a glance"
       className="border-y border-[var(--line)] bg-[var(--ink-925)]"
     >
       <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-y-8 px-5 py-12 sm:px-8 lg:grid-cols-4 lg:gap-y-0 lg:py-14">

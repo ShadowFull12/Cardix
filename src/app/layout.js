@@ -11,13 +11,13 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Cardix | Smart Digital Identity",
+  title: "Cardixx | Smart Digital Identity",
   description: "Your next-generation digital identity and social card platform.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Cardix",
+    title: "Cardixx",
   },
 };
 

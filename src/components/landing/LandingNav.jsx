@@ -152,7 +152,7 @@ export function LandingNav() {
           transition: "height 240ms cubic-bezier(0.23,1,0.32,1)",
         }}
       >
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Cardix home">
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Cardixx home">
           <Image
             src="/logo.png"
             alt=""
@@ -161,7 +161,7 @@ export function LandingNav() {
             priority
             className="h-[34px] w-[34px] object-contain"
           />
-          <span className="lp-display text-[19px] tracking-[-0.03em]">Cardix</span>
+          <span className="lp-display text-[19px] tracking-[-0.03em]">Cardixx</span>
         </Link>
 
         <ul className="hidden items-center gap-0.5 lg:flex">

@@ -40,7 +40,7 @@ export function CardixCard({
   mode = "full",
   name = "Ifeoma Adeyemi",
   role = "Product Designer, Lagos",
-  handle = "cardix1.vercel.app/card/ifeoma",
+  handle = "cardixx1.vercel.app/card/ifeoma",
   initials = "I",
   showQr = true,
   className = "",

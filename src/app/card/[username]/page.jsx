@@ -130,13 +130,13 @@ export default function PublicProfileRoute({ params }) {
                 <span className="font-bold font-mono text-xl text-white">C</span>
               </div>
               <p className="text-zinc-300 font-medium mb-4 max-w-sm">
-                Haven't got your Cardix yet? Get yours now completely for free!
+                Haven't got your Cardixx yet? Get yours now completely for free!
               </p>
               <button 
                 onClick={() => router.push("/signup")}
                 className="px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-all hover:scale-105 active:scale-95"
               >
-                Create Free Cardix
+                Create Free Cardixx
               </button>
             </>
           ) : (

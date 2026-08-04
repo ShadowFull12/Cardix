@@ -24,7 +24,7 @@ const STEPS = [
     id: "keep",
     Icon: UserPlus,
     title: "They keep you",
-    body: "The card opens in their browser with no download and no account. One tap saves it as a phone contact, or into their Cardix network if they have one.",
+    body: "The card opens in their browser with no download and no account. One tap saves it as a phone contact, or into their Cardixx network if they have one.",
     meta: "vCard and saved cards",
   },
 ];

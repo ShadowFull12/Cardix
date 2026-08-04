@@ -47,7 +47,7 @@ export function PublicCard({ profile, viewer, shareMode }) {
   const shareProfile = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${profile.publicData.name}'s Cardix Profile`,
+        title: `${profile.publicData.name}'s Cardixx Profile`,
         url: window.location.href,
       }).catch(console.error);
     } else {
@@ -265,7 +265,7 @@ export function PublicCard({ profile, viewer, shareMode }) {
 
       {/* Watermark */}
       <div className="px-6 pb-4 text-center relative z-10">
-        <span className="text-[9px] font-mono tracking-widest uppercase text-zinc-600">Powered by Cardix</span>
+        <span className="text-[9px] font-mono tracking-widest uppercase text-zinc-600">Powered by Cardixx</span>
       </div>
     </motion.div>
   );

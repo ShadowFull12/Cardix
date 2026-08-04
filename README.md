@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✨ Cardix
+# ✨ Cardixx
 
 ### Your Digital Identity, Reimagined
 
@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
 
-**Cardix** is a premium digital business card platform that lets you create, customize, and share your professional identity through a beautiful QR-enabled card. Built with modern web technologies and a stunning glassmorphic dark UI.
+**Cardixx** is a premium digital business card platform that lets you create, customize, and share your professional identity through a beautiful QR-enabled card. Built with modern web technologies and a stunning glassmorphic dark UI.
 
 ---
 
@@ -52,7 +52,7 @@
 | Feature | Description |
 |---------|-------------|
 | 🧭 **Guided Onboarding** | 5-step wizard: Welcome → Template → Customize → Profile → Preview |
-| 📸 **QR Scanner** | Built-in camera scanner to scan other Cardix QR codes |
+| 📸 **QR Scanner** | Built-in camera scanner to scan other Cardixx QR codes |
 | 🌐 **Responsive Design** | Desktop sidebar + mobile bottom nav with animated active indicators |
 | 🎭 **8 Card Templates** | Modern, Business, Creator, Developer, Minimal, Sunset, Ocean, Neon |
 
@@ -90,7 +90,7 @@
 ```bash
 # Clone the repository
 git clone https://github.com/ShadowFull12/Cardix.git
-cd Cardix
+cd Cardixx
 
 # Install dependencies
 npm install
@@ -138,7 +138,7 @@ NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_unsigned_preset
 ## 📁 Project Structure
 
 ```
-Cardix/
+Cardixx/
 ├── src/
 │   ├── app/                     # Next.js App Router pages
 │   │   ├── (app)/               # Authenticated layout group
@@ -175,7 +175,7 @@ Cardix/
 
 ## 🎨 Card Customization
 
-Cardix cards are fully customizable through the onboarding flow and the **Card Editor**:
+Cardixx cards are fully customizable through the onboarding flow and the **Card Editor**:
 
 | Option | Choices |
 |--------|---------|
@@ -230,6 +230,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 **Built with ❤️ using Next.js, Firebase, and Cloudinary**
 
-[⬆ Back to Top](#-cardix)
+[⬆ Back to Top](#-cardixx)
 
 </div>
