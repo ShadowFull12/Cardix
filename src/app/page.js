@@ -15,11 +15,14 @@ export const metadata = {
   title: "Cardixx, your business card in one scan",
   description:
     "Cardixx puts your contacts, links and socials on one card with a QR code. They scan it, your card opens in their browser, they save you in a tap. Free forever plan.",
+  alternates: {
+    canonical: "https://cardixx.me",
+  },
   openGraph: {
     title: "Cardixx, your business card in one scan",
     description:
       "A digital identity card with a branded QR code, expiring share links, analytics and a personal vault.",
-    url: "https://cardixx1.vercel.app",
+    url: "https://cardixx.me",
     siteName: "Cardixx",
     type: "website",
   },

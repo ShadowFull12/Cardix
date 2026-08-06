@@ -96,6 +96,10 @@ export function LandingFooter() {
       title: "Project",
       links: [
         {
+          label: "Contact: founder@cardixx.me",
+          href: "mailto:founder@cardixx.me",
+        },
+        {
           label: "Source on GitHub",
           href: "https://github.com/ShadowFull12/Cardix",
           external: true,
@@ -127,8 +131,14 @@ export function LandingFooter() {
               </span>
             </div>
             <p className="lp-measure mt-4 max-w-xs text-[14px] leading-relaxed text-[var(--paper-faint)]">
-              A digital identity card you hand over with a scan. Built with
-              Next.js, Firebase and Cloudinary.
+              A digital identity card you hand over with a scan. Contact us at{" "}
+              <a
+                href="mailto:founder@cardixx.me"
+                className="text-[var(--paper)] underline"
+              >
+                founder@cardixx.me
+              </a>
+              .
             </p>
           </div>
 
@@ -158,7 +168,7 @@ export function LandingFooter() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[13px] text-[var(--paper-faint)]">
-            © 2026 Cardixx
+            © 2026 Cardixx | Contact: founder@cardixx.me
           </p>
           <p className="text-[13px] text-[var(--paper-faint)]">
             In beta. Expect rough edges, and tell us about them.

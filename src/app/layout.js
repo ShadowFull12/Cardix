@@ -11,6 +11,10 @@ const inter = Inter({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://cardixx.me"),
+  alternates: {
+    canonical: "https://cardixx.me",
+  },
   title: "Cardixx | Smart Digital Identity",
   description: "Your next-generation digital identity and social card platform.",
   manifest: "/manifest.json",
